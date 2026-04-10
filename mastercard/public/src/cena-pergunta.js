@@ -27,17 +27,11 @@ class CenaPergunta extends Phaser.Scene {
     // Preload: carrega os fundos das perguntas e os elementos visuais da interface
     preload() {
         // Lista os modos usados para montar dinamicamente as chaves das imagens
-        const dificuldades = ['iniciante', 'intermediario', 'dificil'];
+        // Carrega só as 5 imagens da ilha e modo atual, não todas as 75
+        const numeroIlha = this.ilha.replace('ilha', 'i'); // converte 'ilha1' > 'i1'
 
-        for (let i = 1; i <= 5; i++) {
-            dificuldades.forEach(d => {
-                // Carrega os fundos de cada pergunta combinando modo, ilha e número da questão
-                this.load.image(`${d}_i${i}_q1`, `assets/perguntas/${d}_i${i}_q1.jpg`);
-                this.load.image(`${d}_i${i}_q2`, `assets/perguntas/${d}_i${i}_q2.jpg`);
-                this.load.image(`${d}_i${i}_q3`, `assets/perguntas/${d}_i${i}_q3.jpg`);
-                this.load.image(`${d}_i${i}_q4`, `assets/perguntas/${d}_i${i}_q4.jpg`);
-                this.load.image(`${d}_i${i}_q5`, `assets/perguntas/${d}_i${i}_q5.jpg`);
-            });
+        for (let q = 1; q <= 5; q++) {
+            this.load.image(`${this.modo}_${numeroIlha}_q${q}`, `assets/perguntas/${this.modo}_${numeroIlha}_q${q}.jpg`);
         }
 
         this.load.image('lista', 'assets/icones_gerais/lista.png');
@@ -59,10 +53,6 @@ class CenaPergunta extends Phaser.Scene {
 
     // Create: garante a pontuação inicial e monta a primeira pergunta da cena
     create() {
-        // Se a rodada ainda não tem pontuação salva, começa do zero
-        if (this.registry.get('pontuacao') === undefined) {
-            this.registry.set('pontuacao', 0);
-        }
 
         this.montarQuestao();
     }
@@ -154,7 +144,10 @@ class CenaPergunta extends Phaser.Scene {
                 this.montarQuestao();
             } else {
                 // Passa ilha e modo para que contextoFacil.init() exiba o contexto correto
-                this.scene.start('contextoFacil', { ilha: this.ilha, modo: this.modo });
+                let cenaContexto = 'contextoFacil';
+                if (this.modo === 'intermediario') cenaContexto = 'contextoIntermediario';
+                if (this.modo === 'avancado') cenaContexto = 'contextoAvancado';
+                this.scene.start(cenaContexto, { ilha: this.ilha, modo: this.modo });
             }
         });
 
@@ -202,6 +195,8 @@ class CenaPergunta extends Phaser.Scene {
         // Salva o novo total para que outras cenas também possam reutilizar esse valor
         this.registry.set('pontuacao', valor);
 
+        localStorage.setItem('pontuacao', String(valor));
+
         // Se o texto já estiver em tela, atualiza a HUD imediatamente
         if (this.textoPontuacao) {
             this.textoPontuacao.setText(`R$ ${valor}`);
@@ -234,6 +229,7 @@ class CenaPergunta extends Phaser.Scene {
         // Marca a questão como já pontuada para bloquear ganhos duplicados
         questoesPontuadas[chaveQuestao] = true;
         this.registry.set('questoesPontuadas', questoesPontuadas);
+        localStorage.setItem('questoesPontuadas', JSON.stringify(questoesPontuadas));
         // Soma os pontos e atualiza o texto exibido ao jogador
         this.atualizarPontuacao(pontuacaoAtual + pontosGanhos);
     }
@@ -436,6 +432,8 @@ class CenaPergunta extends Phaser.Scene {
         botaoAlternativaImage.clearTint();
 
         // 2. Restaura a câmera e remove os elementos do pop-up
+        // Cancelar todos os tweens ativos na câmera antes de redefinir scrollY
+        this.tweens.killTweensOf(this.cameras.main);
         this.cameras.main.scrollY = 0;
         containerAcerto.destroy();
         bloqueador.destroy();
@@ -453,6 +451,7 @@ class CenaPergunta extends Phaser.Scene {
             if (sfxPermitidoFinal !== false) {
                 this.sound.play('ilha-concluida', { volume: 0.8 });
             }
+        
 
             const totalIlhasDoModo = Object.keys(perguntas[this.modo] || {}).length;
 
@@ -464,30 +463,43 @@ class CenaPergunta extends Phaser.Scene {
             // Atualiza o progresso específico deste modo
             if (numeroIlhaAtual > nivelMaximoAlcancado) {
                 this.registry.set(chaveProgresso, numeroIlhaAtual);
+                localStorage.setItem(chaveProgresso, String(numeroIlhaAtual));
             }
 
-            // --- LÓGICA DE DIRECIONAMENTO ---
+            // LÓGICA DE DIRECIONAMENTO
             let telaMapa = 'telaTrilha'; // Padrão Iniciante
             if (this.modo === 'intermediario') {
-                telaMapa = 'telaTrilhaIntermediaria'; 
+                telaMapa = 'telaTrilhaIntermediaria';
             } else if (this.modo === 'avancado') {
                 telaMapa = 'telaTrilhaAvancada';
             }
 
             if (this.modo === 'iniciante' && numeroIlhaAtual >= totalIlhasDoModo) {
-                this.scene.start(telaMapa);
-                this.scene.launch('telaParabens1');
-            } else if (this.modo === 'intermediario' && numeroIlhaAtual >= totalIlhasDoModo) {
-                this.scene.start(telaMapa);
-                this.scene.launch('telaParabens2');
-            } else {
-                // Volta para o mapa do modo em que o jogador estava
-                this.scene.start(telaMapa);
+                if (pontuacaoFinal >= 120) {
+                    this.scene.start(telaMapa);
+                    this.scene.launch('telaParabens1');
+                } else {
+                // Pontuação insuficiente: retorna ao mapa sem desbloquear
+                    this.scene.start(telaMapa);
                 }
-            }
-        });
-
-     
+                } else if (this.modo === 'intermediario' && numeroIlhaAtual >= totalIlhasDoModo) {
+                    if (pontuacaoFinal >= 300) {
+                        this.scene.start(telaMapa);
+                        this.scene.launch('telaParabens2');
+                    } else {
+                        this.scene.start(telaMapa);
+                    }
+                } else if (this.modo === 'avancado' && numeroIlhaAtual >= totalIlhasDoModo) {
+                    if (pontuacaoFinal >= 500) {
+                        this.scene.start(telaMapa);
+                        this.scene.launch('telaParabensFinal');
+                    } else {
+                    this.scene.start(telaMapa);
+                    }
+                } else {
+                    this.scene.start(telaMapa);
+                }
+            }});
     }
 
     // Exibe o feedback negativo e mantém o jogador na mesma pergunta para tentar novamente
@@ -560,6 +572,8 @@ class CenaPergunta extends Phaser.Scene {
             txtFeedbackErro.destroy();
             btnOkErro.destroy();
             bloqueador.destroy();
+            // Cancelar todos os tweens ativos na câmera antes de redefinir scrollY
+            this.tweens.killTweensOf(this.cameras.main);
             this.cameras.main.scrollY = 0;
         });
     }

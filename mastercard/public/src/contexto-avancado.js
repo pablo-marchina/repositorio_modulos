@@ -80,7 +80,7 @@ class ContextoAvancado extends Phaser.Scene {
             }
         ).setOrigin(0.5, 0.5).setAlpha(0);
 
-        this.tweens.add({ targets: textoMeio, alpha: 1, duration: 800, delay: 1900 });
+        this.tweens.add({ targets: textoMeio, alpha: 1, duration: 800, delay: 1000 });
 
         const textoExplicativo = this.add.text(
             this.cameras.main.centerX, 436,
@@ -94,7 +94,7 @@ class ContextoAvancado extends Phaser.Scene {
             }
         ).setOrigin(0.5, 0.5).setAlpha(0);
 
-        this.tweens.add({ targets: textoExplicativo, alpha: 1, duration: 700, delay: 4200 });
+        this.tweens.add({ targets: textoExplicativo, alpha: 1, duration: 700, delay: 1500 });
 
         // Botão Continuar
         let graphics = this.make.graphics();
@@ -124,7 +124,7 @@ class ContextoAvancado extends Phaser.Scene {
 
         // Botão voltar: retorna ao mapa da trilha
         this.add.image(315, 560, 'voltar').setScale(0.8).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
-            this.scene.start('telaTrilha');
+            this.scene.start('telaTrilhaAvancada');
         }).setDepth(12);
     }
 }

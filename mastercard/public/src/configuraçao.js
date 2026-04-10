@@ -77,14 +77,14 @@ class Configuracao extends Phaser.Scene {
         let posicaoXEdit = textoNome.x + (textoNome.width / 2) + 20;
         let posicaoYEdit = textoNome.y;
       
-        const edit = this.add.image(posicaoXEdit, posicaoYEdit, 'editar')
+        const botaoEditarNome = this.add.image(posicaoXEdit, posicaoYEdit, 'editar')
             .setScale(0.9)
             .setInteractive();
 
-        edit.on('pointerover', () => { edit.setScale(1.0); }); 
-        edit.on('pointerout', () => { edit.setScale(0.9); });  
+        botaoEditarNome.on('pointerover', () => { botaoEditarNome.setScale(1.0); }); 
+        botaoEditarNome.on('pointerout', () => { botaoEditarNome.setScale(0.9); });  
 
-        edit.on('pointerdown', () => {
+        botaoEditarNome.on('pointerdown', () => {
             // Impede a criação de vários inputs HTML caso o botão seja clicado mais de uma vez
             if (document.getElementById('inputNomeJogador')) return;
 
@@ -145,7 +145,7 @@ class Configuracao extends Phaser.Scene {
                         this.registry.set('nomeJogador', novoNome);
                         
                         // Recalcula a posição do lápis porque a largura do nome pode mudar
-                        edit.x = textoNome.x + (textoNome.width / 2) + 20;
+                        botaoEditarNome.x = textoNome.x + (textoNome.width / 2) + 20;
                     }
                     
                     this.inputNome.remove();
@@ -185,12 +185,12 @@ class Configuracao extends Phaser.Scene {
         this.registry.set('musica_ligada', estadoMusica);
         this.btnMusica.setTexture(estadoMusica ? 'musica' : 'musica-off').setScale(0.8);
 
-        // CORREÇÃO AQUI: Busca a música direto do registry
+        // Busca a música direto do registry
         const musicaGlobal = this.registry.get('instanciaMusica');
 
         if (musicaGlobal) {
             if (estadoMusica) {
-                musicaGlobal.resume(); // ou musicaGlobal.play() se preferir
+                musicaGlobal.resume(); 
             } else {
                 musicaGlobal.pause();
             }

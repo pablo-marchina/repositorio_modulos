@@ -64,7 +64,7 @@ class TelaDificuldade extends Phaser.Scene {
             alpha: 1,
             x: 230,
             duration: 200,
-            delay: 1000
+            delay: 500
         });
 
         // Criação do container do cartão avançado
@@ -93,7 +93,7 @@ class TelaDificuldade extends Phaser.Scene {
             alpha: 1,
             x: 140,
             duration: 200,
-            delay: 1800
+            delay: 800
         });
 
         // Feedback de clique para o cartão avançado: navega se desbloqueado, senão balança

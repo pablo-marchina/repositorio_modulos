@@ -533,7 +533,6 @@
 &emsp;	\# | Título | Ocorrência | Tipo | Autor | Link
 --- | --- | --- | --- | --- | ---
 &emsp;	1 | Quiz Master | Trilha em loop durante a navegação no mapa das Ilhas da Vida (telaTrilha) | Música | BackgroundMusicMaster | https://pixabay.com/pt/music/otimista-quiz-master-382651/
-&emsp;	2 | Game loading (Tela Inicial) | Jingle de abertura ao passar pela loading screen |  SFX | Pixabay | 
 
 &emsp;**Efeitos sonoros – Interface**
 
@@ -543,8 +542,8 @@
 
 &emsp;	\# | Título | Ocorrência | Tipo | Autor | Link
 --- | --- | --- | --- | --- | ---
-&emsp;	3 | Game Loading Sound Effect | Reproduzido durante a tela de carregamento inicial ao abrir o jogo | SFX | Pixabay | https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-game-loading-sound-effect-380367/
-&emsp;	4 | Som de Clique | Toque ao clicar em elementos do jogo | SFX | Pixabay | https://pixabay.com/pt/sound-effects/search/ui-click/
+&emsp;	2 | Game Loading Sound Effect | Reproduzido durante a tela de carregamento inicial ao abrir o jogo | SFX | Pixabay | https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-game-loading-sound-effect-380367/
+&emsp;	3 | Som de Clique | Toque ao clicar em elementos do jogo | SFX | Pixabay | https://pixabay.com/pt/sound-effects/search/ui-click/
 
 &emsp;**Efeitos sonoros – Respostas**
 
@@ -554,10 +553,10 @@
 
 &emsp;	\# | Título | Ocorrência | Tipo | Autor | Link
 --- | --- | --- | --- | --- | ---
-&emsp;	5 | Pop up Sound | Acionado após clique na ilha ao mostrar contexto | SFX | Pixabay | https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-pop-up-notify-smooth-modern-332448/
-&emsp;	6 | Som Resposta Correta | Reforço positivo adicional exibido junto ao pop-up de parabenização do Wink | SFX | freesound_community | https://pixabay.com/pt/sound-effects/tecnologia-correct-game-show-alert-499485/
-&emsp;	7 | Incorrect Answer Game Show Alert | Acionado imediatamente ao jogador selecionar a alternativa errada | SFX | Pixabay | https://pixabay.com/pt/sound-effects/tecnologia-incorrect-answer-game-show-alert-1-504513/
-&emsp;	8 | Som Resposta Errada | Som de erro ao clicar em algo que não está desbloqueado | SFX | Pixabay | https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-wrong-47985/
+&emsp;	4 | Pop up Sound | Acionado após clique na ilha ao mostrar contexto | SFX | Pixabay | https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-pop-up-notify-smooth-modern-332448/
+&emsp;	5 | Som Resposta Correta | Reforço positivo adicional exibido junto ao pop-up de parabenização do Wink | SFX | freesound_community | https://pixabay.com/pt/sound-effects/tecnologia-correct-game-show-alert-499485/
+&emsp;	6 | Incorrect Answer Game Show Alert | Acionado imediatamente ao jogador selecionar a alternativa errada | SFX | Pixabay | https://pixabay.com/pt/sound-effects/tecnologia-incorrect-answer-game-show-alert-1-504513/
+&emsp;	7 | Som Resposta Errada | Som de erro ao clicar em algo que não está desbloqueado | SFX | Pixabay | https://pixabay.com/pt/sound-effects/filme-e-efeitos-especiais-wrong-47985/
 
 &emsp;**Efeitos sonoros – Progressão e Conquistas**
 
@@ -567,14 +566,21 @@
 
 &emsp;	\# | Título | Ocorrência | Tipo | Autor | Link
 --- | --- | --- | --- | --- | ---
-&emsp;	10 | Musical Cartoon Game Upgrade | Desbloqueio de nível de dificuldade (Iniciante → Intermediário → Avançado) | SFX | Pixabay | https://pixabay.com/pt/sound-effects/musical-cartoon-game-upgrade-494470/
-&emsp;	11 | Success Fanfare Trumpets | Conclusão total do jogo (todas as fases de todos os níveis concluídas) | SFX | freesound_community | https://pixabay.com/sound-effects/success-fanfare-trumpets-6185/
+&emsp;	8 | Musical Cartoon Game Upgrade | Desbloqueio de nível de dificuldade (Iniciante → Intermediário → Avançado) | SFX | Pixabay | https://pixabay.com/pt/sound-effects/musical-cartoon-game-upgrade-494470/
+&emsp;	9 | Success Fanfare Trumpets | Conclusão total do jogo (todas as fases de todos os níveis concluídas) | SFX | freesound_community | https://pixabay.com/sound-effects/success-fanfare-trumpets-6185/
+&emsp;  10 | Inspiring Corporate - Short | Conclusão surpreenda | SFX | freesound_community | https://pixabay.com/pt/music/corporativo-inspiring-corporate-short-110359/
+
+### 3.3.5.1 Sistema de Controle de Áudio
+
+&emsp;  O jogo oferece ao jogador controle total sobre o áudio por meio da tela de configurações, acessível em qualquer momento durante a partida. São dois controles independentes: um para a trilha sonora de fundo (música) e outro para os efeitos sonoros (SFX). 
+
+&emsp;  O estado de cada controle é persistido via registry global do Phaser, garantindo que a preferência do jogador seja mantida ao navegar entre cenas. Os sons de acerto, erro e conclusão de ilha estão integrados diretamente ao fluxo da CenaPergunta e respeitam o estado do SFX definido pelo jogador. A música de fundo é gerenciada como uma instância única no registry, evitando duplicação ao retornar à tela inicial.
 
 ## 3.4. Inventário e Bestiário
 
 ### 3.4.1. Inventário
 
-&emsp;	O Masterclass não utiliza sistema de inventário. Por se tratar de um jogo de trivia narrativa orientado por interface, não há coleta, armazenamento ou uso de itens ao longo da jornada. O único elemento acumulável é o saldo simbólico em R$ fictícios, que funciona como sistema de pontuação, não como inventário jogável.
+&emsp;	O Masterclass não utiliza sistema de inventário. Por se tratar de um jogo de trivia narrativa orientado por interface, não há coleta, armazenamento ou uso de itens ao longo da jornada. O único elemento acumulável é o saldo simbólico em R$ fictícios, que funciona como sistema de pontuação acumulados entre as 3 trilhas, não como inventário jogável.
 
 ### 3.4.2. Bestiário
 
@@ -583,7 +589,7 @@
 ## 3.5. Gameflow (Diagrama de cenas)
 
 <div align="center">
-  <img src="../documents/assets/gameflow.png">
+  <img src="../documents/assets/gameflow.jpg">
 </div>
 
 <div align="center">
@@ -593,11 +599,17 @@
 
 ## 3.6. Regras do jogo
 
-&emsp;	O jogador deve completar a "Trilha da Vida", progredindo por cinco fases cronológicas (da pré-adolescência à aposentadoria) através do acerto obrigatório de perguntas. O objetivo central é acumular o maior saldo possível de "R$ simbólicos" e desbloquear níveis de dificuldade superiores à medida que as fases do nível anterior forem concluídas. Dentro de cada nível, as fases devem ser concluídas na ordem cronológica apresentada no mapa, uma fase é considerada concluída quando o jogador responde corretamente a todas as suas perguntas.
+&emsp;	O jogador deve completar a "Trilha da Vida", progredindo por cinco fases cronológicas (da pré-adolescência à aposentadoria) através do acerto obrigatório de perguntas. O objetivo central é acumular o maior saldo possível de "R$ simbólicos" e desbloquear níveis de dificuldade superiores, respeitando pontuações mínimas acumulativas por trilha. Dentro de cada nível, as fases devem ser concluídas na ordem cronológica apresentada no mapa, uma fase é considerada concluída quando o jogador responde corretamente a todas as suas perguntas.
  
 &emsp;	O sistema de pontuação atribui +10 R$ por acerto direto, +5 R$ por acerto após usar a dica do Wink, e +3 R$ por acerto após uma tentativa errada. Cada pergunta só é pontuada uma única vez por sessão, ao revisitar uma fase já concluída, as questões anteriores não somam pontos novamente. O jogador não perde saldo ao errar, a penalidade é apenas a redução da recompensa. Após um erro, as alternativas ficam bloqueadas por 500ms antes de liberarem nova tentativa.
  
 &emsp;	O jogo não deduz pontos por erro, ao errar, o jogador fica retido na questão e, após ler o feedback didático, deve tentar novamente até acertar. Cada questão só pode gerar pontuação uma única vez, independentemente de quantas vezes for revisitada. Caso o jogador use a dica e também erre, prevalece a penalidade maior; ou seja, a pontuação pelo acerto será de R$ 3.
+
+&emsp;  Os limiares mínimos para a progressão são as seguintes: 
+
+- Trilha Iniciante: pontuação mínima de *120 pontos* para concluir (equivalente a 6/10 das questões acertadas diretamente). Caso não seja atingida, o jogador deve repetir a trilha Iniciante.
+- Trilha Intermediária: pontuação acumulada mínima de *300 pontos* para concluir (equivalente a 9/10 na Iniciante + 6/10 na Intermediária). Caso não seja atingida, o jogador pode repetir a trilha Intermediária ou a Iniciante para maximizar os pontos acumulados. 
+- Trilha Avançada: pontuação acumulada mínima de *500 pontos* para concluir o jogo integralmente (equivalente a 10/10 na Iniciante + 9/10 na Intermediária + 6/10 na Avançada). Caso não seja atingida, o jogador pode repetir qualquer trilha anterior para recuperar pontos. 
 
 ## 3.7. Mecânicas do jogo
 
@@ -610,7 +622,7 @@
 | Comando | Ação do Jogador | Consequência no Jogo |
 | :--- | :--- | :--- |
 | **Toque Simples (Tap)** | Pressionar botões de menu ou cartões de resposta. | Seleciona opções, confirma escolhas e realiza a transição entre telas. |
-| **Seleção de Alternativa** | Tocar em um dos cards de resposta na fase. | O sistema valida a resposta: se correta, o card fica verde e soma saldo de acordo com a regra de pontuação (+R$ 10, +R$ 5 ou +R$ 3); se incorreta, fica vermelho, a câmera faz um efeito de tremida (shake) e exibe o pop-up de feedback educativo. Após fechar o pop-up, o botão errado tem o tint removido, permitindo nova tentativa. |
+| **Seleção de Alternativa** | Tocar em um dos cards de resposta na fase. | O sistema valida a resposta: se correta, o card fica verde e soma saldo de acordo com a regra de pontuação (+R$ 10 por acerto direto, +R$ 5 por acerto após dica do Wink, ou +R$ 3 por acerto após erro); se incorreta, fica vermelho, a câmera faz um efeito de tremida (shake) e exibe o pop-up de feedback educativo. Após fechar o pop-up, o botão errado tem o tint removido, permitindo nova tentativa. A pontuação é acumulativa entre ilhas para fins de comparação e desbloqueio progressivo. 
 | **Pop-up de Feedback** | Ler o pop-up exibido após a resposta. | Se incorreta, exibe explicação didática e botão "OK" para tentar novamente, com scroll da câmera para visualização simultânea da questão e das alternativas. Se correta, exibe parabenização com o texto de feedback positivo e botão de próxima pergunta. Cliques na área externa ao pop-up são bloqueados. |
 | **Cooldown de tentativa** | Aguardar após um erro ou após acionar a dica. | Após uma resposta errada ou uso da dica, as alternativas ficam bloqueadas por 500 ms. Cliques durante esse período são ignorados silenciosamente, sem feedback visual extra. |
 | **Acionamento do Wink** | Tocar no NPC Wink antes de responder. | Exibe um pop-up de dica contextual sobre a questão. O uso da dica marca reduz a recompensa para +R$ 5 caso o jogador acerte sem errar em seguida. O Wink também exibe frases aleatórias de encorajamento que se alternam a cada 8 segundos via tween de fade. |
@@ -629,7 +641,7 @@
 &emsp;	Os elementos animados são as duas metades da logo do jogo, que partem de posições opostas da tela e convergem para o centro durante a abertura da tela inicial.
 
 * `this.logoAnim1` — elemento que parte do canto inferior esquerdo [linha 85 de tela_inicial.js](https://git.inteli.edu.br/graduacao/2026-1a/t24/g04/-/blob/29a0bbda6b846a544bdbe1658187ca0aadcbdd8a/public/tela_inicial.js#L85)
-* `this.logoAnim2` — elemento que parte do canto superior direito[linha 86 de tela_inicial.js](https://git.inteli.edu.br/graduacao/2026-1a/t24/g04/-/blob/29a0bbda6b846a544bdbe1658187ca0aadcbdd8a/public/tela_inicial.js#L86)
+* `this.logoAnim2` — elemento que parte do canto superior direito [linha 86 de tela_inicial.js](https://git.inteli.edu.br/graduacao/2026-1a/t24/g04/-/blob/29a0bbda6b846a544bdbe1658187ca0aadcbdd8a/public/tela_inicial.js#L86)
 
 <div align="center">
   <img src="/documents/assets/animMatElem.png">
@@ -678,74 +690,74 @@
 
 &emsp;**Velocidade constante no eixo x:**
 ```
-&emsp;	Vx = (xf - xi) / T
+Vx = (xf - xi) / T
 ```
 
 &emsp;	Sendo `Vx` constante, a posição em qualquer instante `t` é:
 
 &emsp;**Posição no eixo x em função do tempo:**
 ```
-&emsp;	x(t) = xi + Vx * t
+x(t) = xi + Vx * t
 ```
 
 &emsp;	Substituindo `Vx`:
 ```
-&emsp;	x(t) = xi + ((xf - xi) / T) * t
+x(t) = xi + ((xf - xi) / T) * t
 ```
 
 &emsp;**Aplicação numérica — `this.logoAnim1`:**
 ```
-&emsp;	Vx = (177,5 - (-110)) / 2 = 287,5 / 2 = 143,75 px/s
-&emsp;	x(t) = -110 + 143,75 * t
+Vx = (177,5 - (-110)) / 2 = 287,5 / 2 = 143,75 px/s
+x(t) = -110 + 143,75 * t
 ```
 
 &emsp;**Aplicação numérica — `this.logoAnim2`:**
 ```
-&emsp;	Vx = (177,5 - 475) / 2 = -297,5 / 2 = -148,75 px/s
-&emsp;	x(t) = 475 + (-148,75) * t
+Vx = (177,5 - 475) / 2 = -297,5 / 2 = -148,75 px/s
+x(t) = 475 + (-148,75) * t
 ```
 
 #### 3.8.3.2. Eixo y — Movimento Uniformemente Variado (MUV) com velocidade inicial nula
 
 &emsp;	No MUV com `v0 = 0`, o elemento parte do repouso e acelera uniformemente. Para encontrar a aceleração necessária, parte-se da equação geral do deslocamento:
 ```
-&emsp;	yf = yi + v0*T + (1/2) * a * T²
+yf = yi + v0*T + (1/2) * a * T²
 ```
 
 &emsp;	Como `v0 = 0`:
 ```
-&emsp;	yf - yi = (1/2) * a * T²
+yf - yi = (1/2) * a * T²
 ```
 
 &emsp;	Isolando `a`, obtém-se:
 
 &emsp;**Aceleração no eixo y:**
 ```
-&emsp;	a = 2 * (yf - yi) / T²
+a = 2 * (yf - yi) / T²
 ```
 
 &emsp;**Velocidade no eixo y em função do tempo** (partindo do repouso, `v0 = 0`):
 ```
-&emsp;	vy(t) = a * t
+vy(t) = a * t
 ```
 
 &emsp;**Posição no eixo y em função do tempo:**
 ```
-&emsp;	y(t) = yi + (1/2) * a * t²
+y(t) = yi + (1/2) * a * t²
 ```
 
 &emsp;**Aplicação numérica — `this.logoAnim1`:**
 ```
-&emsp;	a  = 2 * (254 - 450) / 2² = 2 * (-196) / 4 = -98 px/s²
-&emsp;	vy(t) = -98 * t
-&emsp;	y(t)  = 450 - 49 * t²
+a  = 2 * (254 - 450) / 2² = 2 * (-196) / 4 = -98 px/s²
+vy(t) = -98 * t
+y(t)  = 450 - 49 * t²
 ```
 
 &emsp;**Aplicação numérica — `this.logoAnim2`:**
 ```
-&emsp;	a  = 2 * (254 - 50) / 2² = 2 * 204 / 4 = 102 px/s²
-&emsp;	vy(t) = 102 * t
-&emsp;	y(t)  = 50 + 51 * t²
+a  = 2 * (254 - 50) / 2² = 2 * 204 / 4 = 102 px/s²
+vy(t) = 102 * t
+y(t)  = 50 + 51 * t²
 ```
 
 ### 3.8.4. Implementação em código e saídas do console
@@ -753,53 +765,53 @@
 &emsp;	A lógica de animação é executada no método `update()` a cada frame. O tempo acumulado é incrementado de forma fixa a **1/60 s por frame**, assumindo a taxa padrão de 60 FPS do Phaser — diferente de uma abordagem baseada em `delta`, esse método mantém a animação determinística independentemente de variações de framerate:
  
 ```js
-&emsp;	// Em update():
-&emsp;	if (this.movimento) {
-&emsp;	    this.tempo += 1 / 60;
+// Em update():
+if (this.movimento) {
+  this.tempo += 1 / 60;
  
-&emsp;	    this.movimentoLogo(this.logoAnim1, this.tempo);
-&emsp;	    this.movimentoLogo(this.logoAnim2, this.tempo);
+  this.movimentoLogo(this.logoAnim1, this.tempo);
+  this.movimentoLogo(this.logoAnim2, this.tempo);
  
-&emsp;	    if (this.tempo >= this.duracao) {
-&emsp;	        this.movimento = false;
-&emsp;	        this.tempo = 0;
-&emsp;	        this.logoAnim1.setVisible(false);
-&emsp;	        this.logoAnim2.setVisible(false);
-&emsp;	    }
-&emsp;	}
+  if (this.tempo >= this.duracao) {
+    this.movimento = false;
+    this.tempo = 0;
+    this.logoAnim1.setVisible(false);
+    this.logoAnim2.setVisible(false);
+  }
+}
 ```
  
 &emsp;	Dentro de `movimentoLogo(elemento, t)`, o trecho correspondente ao `this.logoAnim1`:
 ```js
-&emsp;	// Eixo x — MU: velocidade constante
-&emsp;	const vx = (xf - xi) / tempoTotal;
-&emsp;	const posX = xi + vx * t;
+// Eixo x — MU: velocidade constante
+const vx = (xf - xi) / tempoTotal;
+const posX = xi + vx * t;
  
-&emsp;	// Eixo y — MUV com v0 = 0: aceleração constante
-&emsp;	const ay = (2 * (yf - yi)) / (tempoTotal ** 2);
-&emsp;	const vy = ay * t;
-&emsp;	const posY = yi + (ay * (t ** 2)) / 2;
+// Eixo y — MUV com v0 = 0: aceleração constante
+const ay = (2 * (yf - yi)) / (tempoTotal ** 2);
+const vy = ay * t;
+const posY = yi + (ay * (t ** 2)) / 2;
  
-&emsp;	// Atualiza a posição do elemento gráfico na tela
-&emsp;	elemento.x = posX;
-&emsp;	elemento.y = posY;
+// Atualiza a posição do elemento gráfico na tela
+elemento.x = posX;
+elemento.y = posY;
  
-&emsp;	// Impressão a cada frame para verificação e validação da modelagem
-&emsp;	console.log("Logo animada inferior | Eixo x(MU) -> V = " + vx + " | Posição = " + posX);
-&emsp;	console.log("Logo animada inferior | Eixo y(MUV) -> A = " + ay + " | V = " + vy + " | Posição = " + posY);
+// Impressão a cada frame para verificação e validação da modelagem
+console.log("Logo animada inferior | Eixo x(MU) -> V = " + vx + " | Posição = " + posX);
+console.log("Logo animada inferior | Eixo y(MUV) -> A = " + ay + " | V = " + vy + " | Posição = " + posY);
 ```
  
 &emsp;	O mesmo padrão é aplicado ao `this.logoAnim2`, com o label `"Logo animada superior"`.
  
 &emsp;**Exemplo de saída esperada no console** (primeiros e último frames de `this.logoAnim1`):
 ```
-&emsp;	Logo animada inferior | Eixo x(MU) -> V = 143.75 | Posição = -107.604...
-&emsp;	Logo animada inferior | Eixo y(MUV) -> A = -98 | V = -1.633... | Posição = 449.986...
-&emsp;	Logo animada inferior | Eixo x(MU) -> V = 143.75 | Posição = -105.208...
-&emsp;	Logo animada inferior | Eixo y(MUV) -> A = -98 | V = -3.266... | Posição = 449.945...
-&emsp;	...
-&emsp;	Logo animada inferior | Eixo x(MU) -> V = 143.75 | Posição = 177.5
-&emsp;	Logo animada inferior | Eixo y(MUV) -> A = -98 | V = -196 | Posição = 254
+Logo animada inferior | Eixo x(MU) -> V = 143.75 | Posição = -107.604...
+Logo animada inferior | Eixo y(MUV) -> A = -98 | V = -1.633... | Posição = 449.986...
+Logo animada inferior | Eixo x(MU) -> V = 143.75 | Posição = -105.208...
+Logo animada inferior | Eixo y(MUV) -> A = -98 | V = -3.266... | Posição = 449.945...
+...
+Logo animada inferior | Eixo x(MU) -> V = 143.75 | Posição = 177.5
+Logo animada inferior | Eixo y(MUV) -> A = -98 | V = -196 | Posição = 254
 ```
  
 &emsp;	Ao final da animação (`t = T = 2s`), os valores coincidem exatamente com as posições finais definidas (`xf = 177,5 px` e `yf = 254 px`), validando a modelagem implementada.
@@ -842,17 +854,14 @@
 
 &emsp;	No menu inicial, além de inserir o nome do jogo, a logo e o botão “Jogar”, adicionamos animações e efeitos de movimento para tornar a interface mais dinâmica. O botão possui efeito visual ao ser clicado, reforçando a interatividade, e está programado para realizar a transição para a tela de carregamento. Com isso, cumprimos totalmente o requisito de criar o menu de início com identidade visual e botão funcional.
 
-&emsp;	Na tela de carregamento, implementamos uma barra de progresso animada e elementos visuais em movimento que indicam que o jogo está sendo preparado. Programamos a transição automática para a tela de nome após um tempo determinado, atendendo ao requisito de conectá-la ao botão “Jogar” e garantir a passagem para a próxima etapa.
+&emsp;	Na tela de carregamento, implementamos uma barra de progresso animada e elementos visuais em movimento que indicam que o jogo está sendo preparado. Programamos a transição automática para a tela de nome após um tempo determinado, atendendo ao requisito de conectá-la ao botão “Jogar” e garantir a passagem para a próxima etapa.	A tela de nome também foi desenvolvida com organização visual clara, contendo texto na parte superior e campo de inserção para o jogador. 
 
-&emsp;	A tela de nome também foi desenvolvida com organização visual clara, contendo texto na parte superior e campo de inserção para o jogador. 
-
-&emsp;	No menu de seleção de dificuldade, criamos os três botões (Iniciante, Intermediário e Avançado) no formato de cartões Mastercard, com interatividade e resposta visual ao toque. Essa tela já cumpre integralmente o requisito de seleção de dificuldade com botões personalizados.
-
-&emsp;	Por fim, estruturamos a tela de fases em formato de ilhas, organizando o conceito do “caminho da vida”. Implementamos a base visual e a navegação até essa etapa, cumprindo o requisito de criar a tela de fases no formato solicitado.
+&emsp;	No menu de seleção de dificuldade, criamos os três botões (Iniciante, Intermediário e Avançado) no formato de cartões Mastercard, com interatividade e resposta visual ao toque. Essa tela já cumpre integralmente o requisito de seleção de dificuldade com botões personalizados.	Então, estruturamos a tela de fases em formato de ilhas, organizando o conceito do “caminho da vida”. Implementamos a base visual e a navegação até essa etapa, cumprindo o requisito de criar a tela de fases no formato solicitado.
 
 &emsp;	Assim, até o momento, já cumprimos os requisitos de desenvolvimento para mobile, criação do menu inicial completo, implementação da tela de carregamento com transição automática, criação da tela de nome e desenvolvimento do menu de seleção de dificuldade, além da estrutura inicial da tela de fases com organização temática.
 
 ## 4.3. Desenvolvimento intermediário do jogo 
+
 &emsp;	A versão intermediária do projeto Masterclass consolidou os pilares fundamentais da experiência através de uma trilha de aprendizado gamificada e uma mecânica de ilhas, garantindo uma imersão gradual que começa nas telas preliminares de perfil e seleção de dificuldade. O grande diferencial desta etapa é a introdução de telas de contexto dinâmicas, que funcionam como guias estratégicos ao situar o jogador acerca do contexto das perguntas, uma vez que o jogo simula uma jornada da vida. Por exemplo, ao clicar em iniciante, a tela de contexto descreve que o jogador acaba de completar 14 anos e terá acesso ao seu primeiro cartão pré-pago.
 
 &emsp;	A progressão ocorre por meio de ilhas temáticas com conjuntos de cinco perguntas, onde a narrativa evolui conforme o avanço do jogador, simulando o amadurecimento financeiro da vida adulta até a fase final. Tecnicamente, adotamos uma estrutura Data-Driven em que as perguntas estão isoladas em um objeto literal dentro de um arquivo .js dedicado, facilitando a manutenção e permitindo que o arquivo cena-pergunta.js monte a interface de forma dinâmica. Para otimizar a experiência do usuário, implementamos pop-ups de feedback com animação de scroll para visualização simultânea da questão e das opções e corrigimos um bug de interação com a implementação de um bloqueador de cliques na área externa ao pop-up.
@@ -893,7 +902,19 @@
 
 ## 4.5. Revisão do MVP
 
-&emsp;	*Descreva e ilustre aqui o desenvolvimento dos refinamentos e revisões da versão final do jogo, explicando brevemente o que foi entregue em termos de MVP. Utilize prints de tela para ilustrar.*
+&emsp;	A versão finalizada do MVP "Masterclass" consolida o universo completo do jogo, integrando o banco integral de perguntas, uma identidade sonora imersiva, refinamentos visuais e o fluxo conclusivo da experiência. Como pilar fundamental, implementamos uma biblioteca de áudio com mais de 10 efeitos sonoros, que variam de trilhas ambientais a Sound Effects (SFX) para feedbacks de interface. Todos esses recursos foram categorizados e vinculados a um menu de configurações, permitindo que o usuário gerencie o volume ou silencie o áudio de acordo com sua preferência.
+
+&emsp;  No âmbito visual, o foco concentrou-se no polimento estético de ícones e botões, além da criação de backgrounds exclusivos que sinalizam a progressão do jogador entre as trilhas de dificuldade intermediária e avançada. Para otimizar a experiência do usuário (UX), introduzimos um tutorial dinâmico acionado imediatamente após a tela de identificação (tela_nome.js). Esta seção utiliza animações fluidas para explicar as mecânicas: a cada interação no comando "continuar", uma nova instrução surge de forma orgânica, simulando uma transição de cena.
+
+&emsp;  A jornada culmina na entrega da recompensa do código Surpreenda, revelado após o término do jogo por meio de uma cena. Alinhado ao feedback do parceiro, o banco de questões foi revisado sob a ótica da acessibilidade e inclusão, garantindo uma linguagem democrática. Tecnicamente, a aplicação recebeu ajustes críticos de estabilidade, como o bloqueio de múltiplos cliques, a implementação de travas temporárias em animações de cartões para evitar falhas visuais e a correção da responsividade da barra HTML, assegurando sua centralização em diversos dispositivos. Por fim, garantimos a persistência de dados através da sincronização em tempo real entre o Registry e o LocalStorage; dessa forma, qualquer atualização no estado do jogo é salva instantaneamente e recuperada de forma automática ao iniciar uma nova sessão, preservando o progresso do usuário.
+
+<div align="center">
+  <img src="../documents/assets/prints_tela_jogo_gdd4_5.png">
+</div>
+
+<div align="center">
+  <strong>Figura 13 — Captura de tela da revisão final do MVP.</strong><br><em>Fonte: elaboração própria.</em>
+</div>
 
 # <a name="c5"></a>5. Testes
 
@@ -951,10 +972,12 @@
 &emsp;	42 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Clicar no botão de retorno (ícone de retorno no canto inferior direito) | O jogo deve redirecionar para a pergunta anterior ou para a tela do contexto (contextoFacil, contextoIntermediario ou contextoDificil) se o jogador estiver na primeira pergunta.
 &emsp;	43 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Clicar no botão de retorno (ícone de retorno no canto inferior direito) após responder uma or mais perguntas | A pontuação permanece e ao responder a(s) mesma(s) pergunta(s) não haverá ganhos adicionais de pontuação.
 &emsp;	44 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente e clicar no "próxima pergunta" | Uma pergunta deve aparecer e devem ser repetidos os testes 38, 39, 40, 41, 42 e 43, até o término da fase.
-&emsp;	45 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase com pontuação abaixo de 100 pontos | O jogo não deve exibir a tela de parabéns e deve informar que a pontuação mínima de 100 pontos não foi atingida para concluir a trilha.
-&emsp;	46 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível iniciante com pontuação igual ou acima de 100 pontos | O jogo deve exibir a tela de parabéns do iniciante (telaParabens1) e o nível intermediário deve ser desbloqueado na tela de dificuldades (telaDificuldade).
-&emsp;	47 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última pergunta da última fase do nível intermediário com pontuação igual ou acima de 100 pontos | O jogo deve exibir a tela de parabéns do intermediário (telaParabens2) e o nível avançado deve ser desbloqueado na tela de dificuldades (telaDificuldade).
-&emsp;	48 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última pergunta da última fase do nível avançado com pontuação igual ou acima de 100 pontos | O jogo deve exibir a tela de parabéns final (telaParabens3), indicando a conclusão completa do Masterclass.
+&emsp;	45 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível iniciante com pontuação abaixo de 120 pontos | O jogo não deve exibir a tela de parabéns e deve informar que a pontuação mínima de 120 pontos não foi atingida para concluir a trilha.
+&emsp;	46 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível iniciante com pontuação igual ou acima de 120 pontos | O jogo deve exibir a tela de parabéns do iniciante (telaParabens1) e o nível intermediário deve ser desbloqueado na tela de dificuldades (telaDificuldade).
+&emsp;	47 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível intermediário com pontuação abaixo de 300 pontos | O jogo não deve exibir a tela de parabéns e deve informar que a pontuação mínima de 300 pontos não foi atingida para concluir a trilha.
+&emsp;	48 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível intermediário com pontuação igual ou acima de 300 pontos | O jogo deve exibir a tela de parabéns do intermediário (telaParabens2) e o nível avançado deve ser desbloqueado na tela de dificuldades (telaDificuldade).
+&emsp;	49 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível avançado com pontuação abaixo de 500 pontos | O jogo não deve exibir a tela de parabéns e deve informar que a pontuação mínima de 500 pontos não foi atingida para concluir a trilha.
+&emsp;	50 | Posicionar o jogo na parte das perguntas (cenaPergunta) | Responder corretamente a última pergunta da última fase do nível avançado com pontuação igual ou acima de 500 pontos | O jogo deve exibir a tela de parabéns final (telaParabens3), indicando a conclusão completa do Masterclass.
 
 ## 5.2. Testes de jogabilidade (playtests)
 
@@ -1272,7 +1295,3 @@
 &emsp;	UNIVERSIDADE DE SÃO PAULO (USP). Falta de planejamento financeiro é o principal motivo de endividamento das novas gerações. São Paulo, [2022]. Disponível em: https://jornal.usp.br/atualidades/falta-de-planejamento-financeiro-e-o-principal-motivo-de-endividamento-das-novas-geracoes/. Acesso em: 20 fev. 2026.
 
 &emsp;	WAMALWA, Peter; RUGIRI, Irene W.; LAULER, Julienne. Digital credit, financial literacy and household indebtedness. KBA Centre for Research on Financial Markets and Policy Working Paper Series, n. 38. Nairobi, 2019. Disponível em: https://www.econstor.eu/handle/10419/249539. Acesso em: 20 fev. 2026.
-
-# <a name="c8"></a>Anexos
-
-&emsp;	*Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*

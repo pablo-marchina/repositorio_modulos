@@ -57,7 +57,7 @@ class TelaNome extends Phaser.Scene {
             alpha: 1,
             y: 250,
             duration: 600,
-            delay: 1300
+            delay: 1000
         });
 
         const textoFinal = this.add.text(
@@ -78,7 +78,7 @@ class TelaNome extends Phaser.Scene {
             alpha: 1,
             y: 400,
             duration: 600,
-            delay: 2100
+            delay: 1500
         });
 
         // Criação container para fazer o botão com bordas arredondadas (estilo pílula)
@@ -135,6 +135,7 @@ class TelaNome extends Phaser.Scene {
 
                     if (nomeJogador !== "") {
                         this.registry.set('nomeJogador', nomeJogador);
+                        localStorage.setItem('nomeJogador', nomeJogador);
                         // O registry armazena o nome de forma global, e vai permitir que seja acessado de outras cenas
                     }
 

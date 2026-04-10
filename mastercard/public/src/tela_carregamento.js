@@ -12,7 +12,7 @@ class TelaCarregamento extends Phaser.Scene {
         this.load.audio('carregamento', 'assets/sons/loading.mp3');
     }
 
-    // Criação dos elementos da cena e configuração de interações/animações
+    // Criação dos elementos da cena e configuração de interações/animações
     create() {
         // Background
         this.add.image(182.5, 300, 'branco').setScale(3);
@@ -26,50 +26,46 @@ class TelaCarregamento extends Phaser.Scene {
         somCarregamento.addMarker({
             name: 'meu_corte',
             start: 0,   // O tempo em segundos onde o áudio vai COMEÇAR (ex: aos 2.5s)
-            duration: 3 // Por quanto tempo ele vai TOCAR (ex: vai tocar por 4s e depois parar)
+            duration: 1.5 // Por quanto tempo ele vai TOCAR (ex: vai tocar por 4s e depois parar)
         });
 
       
-        somCarregamento.play('meu_corte');
-
+        let permissaoSom = this.registry.get('sfx_ligado');
+        if (permissaoSom !== false) {
+            somCarregamento.play('meu_corte');
+        }
+        
         // Texto com pontos animados
         const textoCarregando = this.add.text(182.5, 380, 'Carregando possibilidades', { 
             fontFamily: 'Inclusive Sans',
-            fontSize: '24px',
+            fontSize: '22px',
             color: '#000000',
         }).setOrigin(0.5);
 
         // Variável que controla os pontos
-        let pontos = "";
+        let pontos = 0;
 
+        // Salva referência para destruir depois
         // Atualiza o subtítulo para mostrar a animação
-        this.time.addEvent({
-            delay: 200, 
+        this._timerPontos = this.time.addEvent({
+            delay: 500, // 500ms é mais natural (antes 200ms era rápido demais)
             loop: true,
             callback: () => {
                 // Reseta a string ao chegar em 3 pontos
-                pontos = pontos.length < 3 ? pontos + "." : "";
-                textoCarregando.setText("Carregando possibilidades" + pontos);
+                pontos = (pontos + 1) % 4;
+                textoCarregando.setText("Carregando possibilidades" + ".".repeat(pontos));
             }
         });
 
         // Logo com efeito pulsante
         const logo = this.add.image(182.5, 220, 'logo').setScale(0.4);
 
-        this.tweens.add({
-            targets: logo,
-            scale: 0.8,
-            duration: 1500,
-            yoyo: true,
-            repeat: -1,
-            ease: "Sine.easeInOut"
-        });
-
-        // Mesmo efeito comm a logo
+        // Mesmo efeito com a logo
         const masterclass = this.add.image(182.5, 310, 'masterclass').setScale(0.4);
 
+        // Um só tween para os dois - menos objetos no loop de animação
         this.tweens.add({
-            targets: masterclass,
+            targets: [logo, masterclass],
             scale: 0.8,
             duration: 1500,
             yoyo: true,
@@ -78,7 +74,15 @@ class TelaCarregamento extends Phaser.Scene {
         });
 
         // Mantém a tela de carregamento visível por pelo menos 1.5s antes de transicionar
-        this.time.delayedCall(3000, () => {
+        // Inicia o fadeOut 200ms antes do fim para a transição ser suave
+        this.time.delayedCall(1300, () => {
+            this.cameras.main.fadeOut(200, 255, 255, 255);
+        });
+
+        // Só troca de cena após o fade completar - limpa timer e áudio antes
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this._timerPontos.remove(); // Encerra o timer dos pontos
+            somCarregamento.stop();    // Para o áudio
             this.scene.start('telaNome'); // Encerra a cena e inicia a próxima
         });
 
@@ -92,7 +96,7 @@ class TelaCarregamento extends Phaser.Scene {
         this.tweens.add({
             targets: barraProgresso,
             width: 250, // O valor final deve ser igual à largura da barraFundo
-            duration: 3000,
+            duration: 1500,
             ease: 'Linear'
         });
     }

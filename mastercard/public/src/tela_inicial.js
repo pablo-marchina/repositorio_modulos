@@ -71,7 +71,7 @@ class TelaInicial extends Phaser.Scene {
     // Criação dos elementos da cena e configuração de interações/animações
     create() {
 
-         // Imagem de background
+        // Imagem de background
         this.add.image(182.5, 300, 'branco').setScale(1);
         // 1. Limpa o evento global quando a cena for fechada para evitar memory leak
         this.events.on('shutdown', () => {
@@ -242,7 +242,10 @@ class TelaInicial extends Phaser.Scene {
                 yoyo: true,
                 onComplete: () => {
                     this.scene.start('telaCarregamento');
-                    this.sound.play('clique');
+                    let permissaoSom = this.registry.get('sfx_ligado');
+                    if (permissaoSom !== false) {
+                        this.sound.play('clique');
+                        }
                 }
             });
         });

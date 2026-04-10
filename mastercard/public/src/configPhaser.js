@@ -38,6 +38,38 @@ window.onload = function () {
         game.scene.add('telaTrilhaIntermediaria', TelaTrilhaIntermediaria);
         game.scene.add('telaTrilhaAvancada', TelaTrilhaAvancada);
 
+        // NOVAS CENAS: Fluxo final Mastercard Surpreenda
+        game.scene.add('telaSurpreendaPresente', TelaSurpreendaPresente); // Caixa presente + info Surpreenda
+        game.scene.add('telaSurpreendaCodigo', TelaSurpreendaCodigo);     // Código MASTER-MIND + link
+        
+        const chaves = [
+            'intermediarioDesbloqueado',
+            'avancadoDesbloqueado',
+            'nivelDesbloqueado_iniciante',
+            'nivelDesbloqueado_intermediario',
+            'nivelDesbloqueado_avancado',
+            'nomeJogador',
+            'pontuacao',
+            'musica_ligada',
+            'sfx_ligado',
+            'modoDaltonismo'
+        ];
+    
+        chaves.forEach(chave => {
+            const valor = localStorage.getItem(chave);
+            if (valor !== null) {
+                // Converter tipos corretamente
+                if (valor === 'true') game.registry.set(chave, true);
+                else if (valor === 'false') game.registry.set(chave, false);
+                else if (!isNaN(valor)) game.registry.set(chave, Number(valor));
+                else game.registry.set(chave, valor);
+            }
+        });
+    
+        // A chave 'questoesPontuadas' precisa tratamento especial (objeto JSON)
+        const qp = localStorage.getItem('questoesPontuadas');
+        if (qp) game.registry.set('questoesPontuadas', JSON.parse(qp));
+
         // Define qual cena será iniciada primeiro
         game.scene.start('telaInicial');
     });

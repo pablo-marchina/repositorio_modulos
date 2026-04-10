@@ -208,7 +208,15 @@ class TelaTrilhaIntermediaria extends Phaser.Scene {
             configurarNivel(item, index);
         });
 
-    }
+        // Verifica se deve exibir o overlay de parabéns ao entrar na cena
+        if (this.registry.get('exibirParabens2')) {
+            this.registry.set('exibirParabens2', false);
+            this.time.delayedCall(100, () => {
+                this.scene.launch('telaParabens2');
+            });
+        }
+
+    } // fecha create()
 
     // Exibe o pop-up com o resumo da ilha ao clicar no ícone do nível
     exibirPopupIlha(titulo, descricao, index) {
@@ -349,4 +357,4 @@ class TelaTrilhaIntermediaria extends Phaser.Scene {
         });
     }
 
-};
+}

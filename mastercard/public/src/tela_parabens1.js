@@ -139,6 +139,7 @@ class TelaParabens1 extends Phaser.Scene {
                 onComplete: () => {
                     // Desbloqueia o modo intermediário via flag dedicada
                     this.registry.set('intermediarioDesbloqueado', true);
+                    localStorage.setItem('intermediarioDesbloqueado', 'true');
                     // Para esta cena e a trilha antes de iniciar a tela de dificuldade
                     this.scene.stop();
                     this.scene.stop('telaTrilha');
@@ -179,7 +180,11 @@ class TelaParabens1 extends Phaser.Scene {
         txtVoltar.on('pointerover', () => { txtVoltar.setAlpha(0.65); });
         txtVoltar.on('pointerout',  () => { txtVoltar.setAlpha(1); });
         // Para apenas esta cena — a TelaTrilha continua ativa ao fundo
-        txtVoltar.on('pointerdown', () => { this.scene.stop(); });
+        txtVoltar.on('pointerdown', () => {
+            this.registry.set('intermediarioDesbloqueado', true);
+            localStorage.setItem('intermediarioDesbloqueado', 'true');
+            this.scene.stop();
+        });
 
         // Animação de entrada do card
         // Back.easeOut cria o efeito de "ultrapassar e voltar" (elástico suave) reforçando a sensação de conquista ao exibir o card

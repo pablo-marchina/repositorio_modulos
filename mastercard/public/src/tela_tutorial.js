@@ -29,7 +29,7 @@ class TelaTutorial extends Phaser.Scene {
         this.segundaParteEmTransicao = false;
 
         // Intervalo padrão entre a aparição dos parágrafos sequenciais. Guardados para não precisar alterar vários trechos manualmente
-        const delayEntreParagrafos = 2700;
+        const delayEntreParagrafos = 500;
 
         // Primeiro bloco do tutorial: explica a progressão por níveis
         const textoParagrafo1 = this.add.text(
@@ -280,13 +280,13 @@ class TelaTutorial extends Phaser.Scene {
                         this.tweens.add({
                             targets: textosPrimeiraParte,
                             alpha: 0,
-                            duration: 600,
+                            duration: 200,
                             onComplete: () => {
                                 // Quarto parágrafo aparece
                                 tweenParagrafo4 = this.tweens.add({
                                     targets: textoParagrafo4,
                                     alpha: 1,
-                                    duration: 600,
+                                    duration: 200,
                                     onComplete: () => {
                                         // A partir daqui a segunda parte já começou de fato, então o jogador pode clicar novamente para pular o restante das animações.
                                         containerBotao.setInteractive({ useHandCursor: true });
@@ -295,7 +295,7 @@ class TelaTutorial extends Phaser.Scene {
                                         tweenHudPontuacao = this.tweens.add({
                                             targets: elementosHudPontuacao,
                                             alpha: 0.65,
-                                            duration: 1200,
+                                            duration: 300,
                                             onComplete: () => {
                                                 iniciarMovimentoSetaPontuacao();
                                             }
@@ -306,7 +306,7 @@ class TelaTutorial extends Phaser.Scene {
                                         tweenParagrafo5 = this.tweens.add({
                                             targets: textoParagrafo5,
                                             alpha: 1,
-                                            duration: 600,
+                                            duration: 200,
                                             delay: delayEntreParagrafos,
                                             onComplete: () => {
                                                 // Quando o último parágrafo termina de entrar,a  segunda parte deixa de estar "em transição".
