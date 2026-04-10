@@ -612,17 +612,17 @@
 
 ## 3.6. Regras do jogo
 
-&emsp;	O jogador deve completar a "Trilha da Vida", progredindo por cinco fases cronológicas (da pré-adolescência à aposentadoria) através do acerto obrigatório de perguntas. O objetivo central é acumular o maior saldo possível de "R$ simbólicos" e desbloquear níveis de dificuldade superiores, respeitando pontuações mínimas acumulativas por trilha. Dentro de cada nível, as fases devem ser concluídas na ordem cronológica apresentada no mapa, uma fase é considerada concluída quando o jogador responde corretamente a todas as suas perguntas.
+&emsp; O jogador deve completar a "Trilha da Vida", progredindo por cinco fases cronológicas (da pré-adolescência à aposentadoria) através do acerto obrigatório de perguntas. O objetivo central é acumular o maior saldo possível de "R$ simbólicos" e desbloquear níveis de dificuldade superiores, respeitando pontuações mínimas acumulativas por trilha. Dentro de cada nível, as fases devem ser concluídas na ordem cronológica apresentada no mapa; uma fase é considerada concluída quando o jogador responde corretamente a todas as suas perguntas.
  
-&emsp;	O sistema de pontuação atribui +10 R$ por acerto direto, +5 R$ por acerto após usar a dica do Wink, e +3 R$ por acerto após uma tentativa errada. Cada pergunta só é pontuada uma única vez por sessão, ao revisitar uma fase já concluída, as questões anteriores não somam pontos novamente. O jogador não perde saldo ao errar, a penalidade é apenas a redução da recompensa. Após um erro, as alternativas ficam bloqueadas por 500ms antes de liberarem nova tentativa.
+&emsp; O sistema de pontuação atribui +10 R$ por acerto direto, +5 R$ por acerto após usar a dica do Wink, e +3 R$ por acerto após uma tentativa errada. Caso o jogador use a dica e também erre, prevalece a penalidade maior; ou seja, a pontuação pelo acerto será de R$ 3. Cada pergunta só pode gerar pontuação uma única vez por sessão; ao revisitar uma fase já concluída, as questões anteriores não somam pontos novamente. O jogador não perde saldo ao errar; a penalidade é apenas a redução da recompensa. Após um erro, as alternativas ficam bloqueadas por 500ms antes de liberarem nova tentativa.
  
-&emsp;	O jogo não deduz pontos por erro, ao errar, o jogador fica retido na questão e, após ler o feedback didático, deve tentar novamente até acertar. Cada questão só pode gerar pontuação uma única vez, independentemente de quantas vezes for revisitada. Caso o jogador use a dica e também erre, prevalece a penalidade maior; ou seja, a pontuação pelo acerto será de R$ 3.
-
-&emsp;  Os limiares mínimos para a progressão são as seguintes: 
-
-- Trilha Iniciante: pontuação mínima de *120 pontos* para concluir (equivalente a 6/10 das questões acertadas diretamente). Caso não seja atingida, o jogador deve repetir a trilha Iniciante.
-- Trilha Intermediária: pontuação acumulada mínima de *300 pontos* para concluir (equivalente a 9/10 na Iniciante + 6/10 na Intermediária). Caso não seja atingida, o jogador pode repetir a trilha Intermediária ou a Iniciante para maximizar os pontos acumulados. 
-- Trilha Avançada: pontuação acumulada mínima de *500 pontos* para concluir o jogo integralmente (equivalente a 10/10 na Iniciante + 9/10 na Intermediária + 6/10 na Avançada). Caso não seja atingida, o jogador pode repetir qualquer trilha anterior para recuperar pontos. 
+&emsp; Os limiares mínimos para a progressão são os seguintes:
+ 
+- **Trilha Iniciante:** pontuação mínima de **120 pontos** para concluir (equivalente a 6 acertos diretos em cada 10 questões). Caso não seja atingida, o jogador deve tentar novamente; ao fazê-lo, toda a pontuação acumulada e o histórico de questões pontuadas são reiniciados, permitindo que ele percorra as ilhas anteriores para recuperar pontos antes de retornar à última ilha.
+- **Trilha Intermediária:** pontuação acumulada mínima de **300 pontos** para concluir (equivalente a 9 acertos diretos em cada 10 questões na Iniciante + 6 acertos diretos em cada 10 questões na Intermediária). Caso não seja atingida, o jogador pode tentar novamente ou voltar ao mapa para redistribuir sua estratégia entre as trilhas.
+- **Trilha Avançada:** pontuação acumulada mínima de **500 pontos** para concluir o jogo integralmente (equivalente a 10 acertos diretos em cada 10 questões na Iniciante + 9 acertos diretos em cada 10 questões na Intermediária + 6 acertos diretos em cada 10 questões na Avançada). Caso não seja atingida, o jogador pode tentar novamente ou voltar a qualquer trilha anterior para recuperar pontos.
+ 
+&emsp; A constante `PONTUACAO_MINIMA` que implementa esses limiares é definida globalmente em `configPhaser.js` e referenciada por `cena-pergunta.js` (verificação ao concluir a última ilha) e por `tela_falha.js` (exibição do valor mínimo na tela de pontuação insuficiente).
 
 ## 3.7. Mecânicas do jogo
 
@@ -644,6 +644,7 @@
 | **Inserção de Dados** | Tocar na caixa de texto e usar o teclado virtual. | Permite a entrada de caracteres (máx. 15) para definir o nome do usuário. O campo é um elemento HTML sobreposto ao canvas, com posição recalculada dinamicamente a cada evento de redimensionamento da janela. |
 | **Menu de Configurações** | Tocar no ícone de lista (≡) no canto superior esquerdo de qualquer tela. | Abre a cena `Configuração` como modal sobreposto ao jogo. O jogador pode editar o nome de perfil, ativar/desativar música e efeitos sonoros (botões preparados, integração de áudio pendente para próxima sprint) e alternar entre quatro modos de acessibilidade para daltonismo (Normal, Protanopia, Deuteranopia e Tritanopia), aplicando filtros CSS diretamente no canvas do jogo. |
 | **Botão "Créditos"** | Tocar no botão "Créditos" na tela inicial. | Navega para a tela de créditos, que lista os integrantes do grupo e possui botão de retorno à tela inicial. |
+| **Seleção de Alternativa** | Tocar em um dos cards de resposta na fase. | O sistema valida a resposta: se correta, o card fica verde e soma saldo de acordo com a regra (+R$ 10 por acerto direto; +R$ 5 por acerto após dica do Wink; +R$ 3 por acerto após erro; se houve dica E erro, prevalece R$ 3). Se incorreta, o card fica vermelho, a câmera faz um efeito de tremida (shake) e exibe o pop-up de feedback educativo. Após fechar o pop-up, o tint é removido e o jogador pode tentar novamente. A pontuação é acumulativa entre todas as trilhas para fins de desbloqueio progressivo. A constante `PONTUACAO_MINIMA` (global em `configPhaser.js`) define os limiares: 120 pts para Iniciante, 300 pts acumulados para Intermediária e 500 pts acumulados para Avançada. |
 
 ## 3.8. Implementação Matemática de Animação/Movimento
 

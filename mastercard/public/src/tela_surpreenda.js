@@ -1,5 +1,6 @@
-// Tela do presente Mastercard Surpreenda — exibida após TelaParabensFinal
-// Mostra a caixa animada, explica o Surpreenda e leva ao código
+// Tela do presente Mastercard Surpreenda — exibida após TelaParabens3.
+// Apresenta animação de caixa de presente e explica o programa Surpreenda
+// antes de encaminhar o jogador para a revelação do código promocional.
 class TelaSurpreendaPresente extends Phaser.Scene {
     constructor() {
         super({ key: 'telaSurpreendaPresente' });
@@ -18,15 +19,15 @@ class TelaSurpreendaPresente extends Phaser.Scene {
         const H = 600;
         const CX = W / 2;
 
-        // Fundo branco
+        // Fundo branco como base da tela de recompensa (contrasta com o fundo preto do jogo)
         this.add.image(CX, 300, 'branco').setDepth(0);
 
-        // Barra vermelha do topo
+        // Barra vermelha decorativa no topo, reforçando a identidade Mastercard
         const barraTopo = this.add.graphics().setDepth(1);
         barraTopo.fillStyle(0xB60000, 1);
         barraTopo.fillRect(0, 0, W, 90);
 
-        // Título da tela
+        // Título comemorativo da tela
         this.add.text(CX, 115, 'Seu presente chegou!', {
             fontFamily: 'Inclusive Sans',
             fontSize: '18px',
@@ -36,6 +37,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             align: 'center'
         }).setOrigin(0.5).setDepth(2);
 
+        // Subtítulo que contextualiza o prêmio antes de revelar o código
         this.add.text(CX, 145, 'Você ganhou um código exclusivo\n Mastercard Surpreenda', {
             fontFamily: 'Inclusive Sans',
             fontSize: '12px',
@@ -44,52 +46,54 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             wordWrap: { width: 300 }
         }).setOrigin(0.5).setDepth(2);
 
-        // Caixa de presente animada (desenhada via Graphics)
+        // Container agrupa todos os elementos gráficos da caixa de presente
+        // para que a animação da tampa e as faíscas se movam em conjunto
         this.caixaContainer = this.add.container(CX, 230).setDepth(3);
 
-        // Corpo da caixa
+        // Corpo da caixa de presente (retângulo vermelho arredondado)
         const corpo = this.add.graphics();
         corpo.fillStyle(0xB60000, 1);
         corpo.fillRoundedRect(-42, 0, 84, 62, 5);
 
-        // Faixa horizontal da caixa
+        // Faixa horizontal dourada que cruza o centro do corpo
         const faixaH = this.add.graphics();
         faixaH.fillStyle(0xFFCC00, 1);
         faixaH.fillRect(-42, 22, 84, 14);
 
-        // Faixa vertical do corpo
+        // Faixa vertical dourada que cruza o centro do corpo
         const faixaV = this.add.graphics();
         faixaV.fillStyle(0xFFCC00, 1);
         faixaV.fillRect(-7, 0, 14, 62);
 
-        // Tampa
+        // Tampa da caixa (retângulo levemente mais escuro que o corpo)
         const tampa = this.add.graphics();
         tampa.fillStyle(0xCC1111, 1);
         tampa.fillRoundedRect(-48, -34, 96, 30, 5);
 
-        // Faixa vertical da tampa
+        // Faixa vertical dourada na tampa, alinhada com a faixa do corpo
         const faixaVTampa = this.add.graphics();
         faixaVTampa.fillStyle(0xFFCC00, 1);
         faixaVTampa.fillRect(-7, -34, 14, 30);
 
-        // Laço esquerdo
+        // Laço esquerdo do presente (elipse dourada inclinada)
         const lacoEsq = this.add.graphics();
         lacoEsq.fillStyle(0xFFCC00, 1);
         lacoEsq.fillEllipse(-18, -38, 28, 20);
 
-        // Laço direito
+        // Laço direito do presente
         const lacoDireito = this.add.graphics();
         lacoDireito.fillStyle(0xFFCC00, 1);
         lacoDireito.fillEllipse(18, -38, 28, 20);
 
-        // Nó central do laço
+        // Nó central do laço que une os dois lados
         const no = this.add.graphics();
         no.fillStyle(0xFFAA00, 1);
         no.fillCircle(0, -38, 8);
 
         this.caixaContainer.add([corpo, faixaH, faixaV, tampa, faixaVTampa, lacoEsq, lacoDireito, no]);
 
-        // Animação da tampa subindo e descendo
+        // Anima a tampa subindo e descendo em loop para chamar atenção do jogador
+        // Os elementos que se movem são: tampa, faixa da tampa e o laço inteiro
         this.tweens.add({
             targets: [tampa, faixaVTampa, lacoEsq, lacoDireito, no],
             y: '-=14',
@@ -99,7 +103,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             ease: 'Sine.easeInOut'
         });
 
-        // Faíscas ao redor da caixa
+        // Faíscas decorativas ao redor da caixa para reforçar o efeito comemorativo
         const faixPosicoesBase = [
             { x: CX - 65, y: 192 }, { x: CX + 65, y: 192 },
             { x: CX - 70, y: 240 }, { x: CX + 70, y: 240 },
@@ -113,6 +117,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
                 .setDepth(3)
                 .setAlpha(0.2);
 
+            // Cada faísca pulsa com um delay diferente para um efeito escalonado
             this.tweens.add({
                 targets: faisca,
                 alpha: 1,
@@ -125,14 +130,14 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             });
         });
 
-        // Card de informações sobre o Surpreenda
+        // Card informativo que explica o programa Mastercard Surpreenda ao jogador
         const cardInfo = this.add.graphics().setDepth(2);
         cardInfo.fillStyle(0xFFF8F8, 1);
         cardInfo.lineStyle(1, 0xE8C0C0, 1);
         cardInfo.fillRoundedRect(22, 310, W - 44, 190, 14);
         cardInfo.strokeRoundedRect(22, 310, W - 44, 190, 14);
 
-        // Título do card
+        // Título do card informativo
         this.add.text(CX, 330, 'O que é o Mastercard Surpreenda?', {
             fontFamily: 'Inclusive Sans',
             fontSize: '14px',
@@ -142,12 +147,12 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             strokeThickness: 0.3
         }).setOrigin(0.5).setDepth(3);
 
-        // Linha divisória no card
+        // Linha divisória no card informativo
         const linhaCard = this.add.graphics().setDepth(3);
         linhaCard.lineStyle(0.8, 0xE8C0C0, 1);
         linhaCard.lineBetween(38, 346, W - 38, 346);
 
-        // Texto explicativo
+        // Texto explicativo sobre o programa de fidelidade
         this.add.text(CX, 358, 'Programa de benefícios gratuito onde cada compra com seu cartão Mastercard vale pontos. Troque por vouchers, descontos e experiências exclusivas em parceiros.', {
             fontFamily: 'Inclusive Sans',
             fontSize: '12px',
@@ -157,7 +162,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             wordWrap: { width: 295 }
         }).setOrigin(0.5, 0).setDepth(3);
 
-        // 3 ícones de benefícios
+        // Três ícones de benefícios do programa resumindo o passo a passo
         const beneficios = [
             { x: CX - 95, icon: '📱', label: 'Cadastre-se' },
             { x: CX,      icon: '🛒', label: 'Acumule pontos' },
@@ -165,7 +170,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
         ];
 
         beneficios.forEach(b => {
-            // Círculo de fundo
+            // Círculo de fundo rosa claro para cada ícone
             const cirBen = this.add.graphics().setDepth(3);
             cirBen.fillStyle(0xFFEEEE, 1);
             cirBen.fillCircle(b.x, 458, 22);
@@ -182,7 +187,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             }).setOrigin(0.5).setDepth(3);
         });
 
-        /// Botão "Abrir meu presente" — container garante que fundo e texto pulsem juntos
+        // Container do botão principal agrupa fundo e texto para pulsarem juntos
         const btnContainer = this.add.container(CX, 540).setDepth(4);
 
         const btnG = this.add.graphics();
@@ -198,7 +203,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
 
         btnContainer.add([btnG, txtBtn]);
 
-        // Pulsação suave — agora o container inteiro pulsa junto
+        // Pulsação suave para chamar a atenção do jogador para o botão principal
         this.tweens.add({
             targets: btnContainer,
             scaleX: 1.03,
@@ -209,6 +214,8 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             ease: 'Sine.easeInOut'
         });
 
+        // Zona de toque em coordenadas de mundo — posicionada sobre btnContainer (CX, 540)
+        // Fica fora do container para não ser afetada pela pulsação visual
         const btnZone = this.add.zone(CX, 540, 220, 48)
             .setInteractive({ useHandCursor: true }).setDepth(5);
 
@@ -216,7 +223,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             let permissaoSom = this.registry.get('sfx_ligado');
             if (permissaoSom !== false) this.sound.play('clique', { volume: 0.8 });
 
-            // Animação de "abertura" da caixa antes de trocar
+            // Anima a caixa de presente antes de transitar para a tela do código
             this.tweens.add({
                 targets: this.caixaContainer,
                 scaleX: 1.15,
@@ -224,6 +231,7 @@ class TelaSurpreendaPresente extends Phaser.Scene {
                 duration: 180,
                 yoyo: true,
                 onComplete: () => {
+                    // Fade para branco (não preto) para criar sensação de "abertura" do presente
                     this.cameras.main.fadeOut(600, 255, 255, 255);
                     this.cameras.main.once('camerafadeoutcomplete', () => {
                         this.scene.start('telaSurpreendaCodigo');
@@ -232,10 +240,10 @@ class TelaSurpreendaPresente extends Phaser.Scene {
             });
         });
 
-        // Fade de entrada (vem de preto)
+        // Fade de entrada a partir do preto (vem da tela de parabéns anterior)
         this.cameras.main.fadeIn(500, 0, 0, 0);
 
-        // Animação de entrada da caixa
+        // Animação de entrada da caixa de presente com efeito elástico
         this.caixaContainer.setAlpha(0);
         this.caixaContainer.setScale(0.5);
         this.tweens.add({

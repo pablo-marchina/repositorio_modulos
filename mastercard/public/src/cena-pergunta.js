@@ -22,32 +22,25 @@ class CenaPergunta extends Phaser.Scene {
         this.alternativasBloqueadas = false;
         // O timer fica salvo para ser encerrado ao trocar de pergunta, evitando que um cooldown antigo afete a próxima rodada
         this.timerBloqueioAlternativas = null;
-        
     }
 
     // Preload: carrega os fundos das perguntas e os elementos visuais da interface
     preload() {
+        // NOTA: PONTUACAO_MINIMA é uma constante global definida em configPhaser.js.
+        // Ela NÃO deve ser redeclarada aqui — qualquer declaração local ficaria
+        // restrita ao escopo de preload() e seria invisível para respostaCorreta().
 
-        const PONTUACAO_MINIMA = {
-            iniciante: 100,
-            intermediario: 300,
-            avancado: 500
-        };
-        
-        // Lista os modos usados para montar dinamicamente as chaves das imagens
-        // Carrega só as 5 imagens da ilha e modo atual, não todas as 75
-        const numeroIlha = this.ilha.replace('ilha', 'i'); // converte 'ilha1' > 'i1'
+        // Converte 'ilha1' → 'i1' para montar os nomes dos arquivos de imagem
+        const numeroIlha = this.ilha.replace('ilha', 'i');
 
+        // Carrega apenas as 4 imagens de fundo do modo e ilha atuais.
+        // Isso evita requisições desnecessárias: cada cena carrega somente
+        // o que precisa para a sessão corrente.
         for (let q = 1; q <= 4; q++) {
-            this.load.image(`iniciante_${numeroIlha}_q${q}`, `assets/perguntas/iniciante_${numeroIlha}_q${q}.jpg`);
-        }
-
-        for (let q = 1; q <= 4; q++) {
-            this.load.image(`intermediario_${numeroIlha}_q${q}`, `assets/perguntas/intermediario_${numeroIlha}_q${q}.jpg`);
-        }
-
-        for (let q = 1; q <= 4; q++) {
-            this.load.image(`dificil_${numeroIlha}_q${q}`, `assets/perguntas/dificil_${numeroIlha}_q${q}.jpg`);
+            this.load.image(
+                `${this.modo}_${numeroIlha}_q${q}`,
+                `assets/perguntas/${this.modo}_${numeroIlha}_q${q}.jpg`
+            );
         }
 
         this.load.image('lista', 'assets/icones_gerais/lista.png');
@@ -69,7 +62,6 @@ class CenaPergunta extends Phaser.Scene {
 
     // Create: garante a pontuação inicial e monta a primeira pergunta da cena
     create() {
-
         this.montarQuestao();
     }
 
@@ -80,7 +72,7 @@ class CenaPergunta extends Phaser.Scene {
         // Limpa as flags da questão para o cálculo da próxima pontuação começar do zero
         this.errouQuestaoAtual = false;
         this.usouDicaQuestaoAtual = false;
-        // A nova pergunta sempre começa liberada, porque a espera de 6 segundos vale apenas dentro da questão atual
+        // A nova pergunta sempre começa liberada, porque a espera de cooldown vale apenas dentro da questão atual
         this.alternativasBloqueadas = false;
 
         if (this.timerBloqueioAlternativas) {
@@ -159,7 +151,7 @@ class CenaPergunta extends Phaser.Scene {
                 this.indiceQuestao--;
                 this.montarQuestao();
             } else {
-                // Passa ilha e modo para que contextoFacil.init() exiba o contexto correto
+                // Passa ilha e modo para que a tela de contexto exiba o conteúdo correto
                 let cenaContexto = 'contextoFacil';
                 if (this.modo === 'intermediario') cenaContexto = 'contextoIntermediario';
                 if (this.modo === 'avancado') cenaContexto = 'contextoAvancado';
@@ -210,7 +202,6 @@ class CenaPergunta extends Phaser.Scene {
     atualizarPontuacao(valor) {
         // Salva o novo total para que outras cenas também possam reutilizar esse valor
         this.registry.set('pontuacao', valor);
-
         localStorage.setItem('pontuacao', String(valor));
 
         // Se o texto já estiver em tela, atualiza a HUD imediatamente
@@ -233,19 +224,22 @@ class CenaPergunta extends Phaser.Scene {
 
         // Lê o saldo atual antes de aplicar a recompensa da questão
         const pontuacaoAtual = this.registry.get('pontuacao') || 0;
-        // Prioriza a menor recompensa quando houve erro; se só houve dica, mantém a recompensa intermediária
-        let pontosGanhos = 10;
+
+        // Regra de pontuação (da maior para a menor penalidade):
+        // erro prevalece sobre dica — se errou E usou dica, vale apenas R$ 3
+        let pontosGanhos = 10; // acerto direto, sem dica e sem erro
 
         if (this.errouQuestaoAtual) {
-            pontosGanhos = 3;
+            pontosGanhos = 3;  // acerto após pelo menos um erro
         } else if (this.usouDicaQuestaoAtual) {
-            pontosGanhos = 5;
+            pontosGanhos = 5;  // acerto na primeira tentativa, mas com ajuda do Wink
         }
 
         // Marca a questão como já pontuada para bloquear ganhos duplicados
         questoesPontuadas[chaveQuestao] = true;
         this.registry.set('questoesPontuadas', questoesPontuadas);
         localStorage.setItem('questoesPontuadas', JSON.stringify(questoesPontuadas));
+
         // Soma os pontos e atualiza o texto exibido ao jogador
         this.atualizarPontuacao(pontuacaoAtual + pontosGanhos);
     }
@@ -259,7 +253,7 @@ class CenaPergunta extends Phaser.Scene {
             this.timerBloqueioAlternativas.remove(false);
         }
 
-        // O desbloqueio acontece sozinho após "500ms, sem feedback visual, como pedido para manter a tela limpa
+        // O desbloqueio acontece sozinho após 500ms, sem feedback visual, para manter a tela limpa
         this.timerBloqueioAlternativas = this.time.delayedCall(500, () => {
             this.alternativasBloqueadas = false;
             this.timerBloqueioAlternativas = null;
@@ -445,85 +439,79 @@ class CenaPergunta extends Phaser.Scene {
 
         // Ao confirmar, fecha o feedback e decide se monta a próxima questão ou volta à trilha
         btnOkAcerto.on('pointerdown', () => {
-        // 1. Limpa o efeito visual do botão de alternativa (Tira o verde)
-        botaoAlternativaImage.clearTint();
+            // 1. Limpa o efeito visual do botão de alternativa (remove o verde)
+            botaoAlternativaImage.clearTint();
 
-        // 2. Restaura a câmera e remove os elementos do pop-up
-        // Cancelar todos os tweens ativos na câmera antes de redefinir scrollY
-        this.tweens.killTweensOf(this.cameras.main);
-        this.cameras.main.scrollY = 0;
-        containerAcerto.destroy();
-        bloqueador.destroy();
+            // 2. Cancela tweens ativos na câmera antes de redefinir scrollY para evitar conflito
+            this.tweens.killTweensOf(this.cameras.main);
+            this.cameras.main.scrollY = 0;
+            containerAcerto.destroy();
+            bloqueador.destroy();
 
-        // 3. Incrementa o índice para a próxima pergunta
-        this.indiceQuestao++;
+            // 3. Incrementa o índice para a próxima pergunta
+            this.indiceQuestao++;
 
-        // 4. Verifica se ainda há perguntas
-        if (this.indiceQuestao < perguntas[this.modo][this.ilha].length) {
-            // Se tem próxima, monta a nova questão (isso limpa a tela automaticamente)
-            this.montarQuestao();
-        } else {
-            // Se ACABARAM as perguntas, rodamos a lógica de voltar para o mapa correto
-            let sfxPermitidoFinal = this.registry.get('sfx_ligado');
-            if (sfxPermitidoFinal !== false) {
-                this.sound.play('ilha-concluida', { volume: 0.8 });
-            }
-        
+            // 4. Verifica se ainda há perguntas na ilha atual
+            if (this.indiceQuestao < perguntas[this.modo][this.ilha].length) {
+                // Se tem próxima, monta a nova questão (isso limpa a tela automaticamente)
+                this.montarQuestao();
+            } else {
+                // Se acabaram as perguntas, executa a lógica de conclusão da ilha
 
-            const totalIlhasDoModo = Object.keys(perguntas[this.modo] || {}).length;
-
-            let chaveProgresso = 'nivelDesbloqueado_' + this.modo;
-
-            let numeroIlhaAtual = parseInt(this.ilha.replace('ilha', ''));
-            let nivelMaximoAlcancado = this.registry.get(chaveProgresso) || 0;
-
-            // Atualiza o progresso específico deste modo
-            if (numeroIlhaAtual > nivelMaximoAlcancado) {
-                this.registry.set(chaveProgresso, numeroIlhaAtual);
-                localStorage.setItem(chaveProgresso, String(numeroIlhaAtual));
-            }
-
-            /// ... (seu código de salvar nível máximo fica mantido aqui) ...
-
-            // LÓGICA DE DIRECIONAMENTO
-            let telaMapa = 'telaTrilha'; // Padrão Iniciante
-            if (this.modo === 'intermediario') telaMapa = 'telaTrilhaIntermediaria';
-            else if (this.modo === 'avancado') telaMapa = 'telaTrilhaAvancada';
-
-            const pontuacaoFinal = this.registry.get('pontuacao') || 0;
-            // Se por algum motivo a constante falhar, assume 100 como segurança
-            const pontuacaoMinima = (typeof PONTUACAO_MINIMA !== 'undefined' && PONTUACAO_MINIMA[this.modo]) ? PONTUACAO_MINIMA[this.modo] : 100;
-
-            if (numeroIlhaAtual >= totalIlhasDoModo) {
-                // Chegou na última ilha!
-                if (pontuacaoFinal >= pontuacaoMinima) {
-                    
-                    // Em vez de carregar o Mapa e o Parabéns juntos e causar conflito, 
-                    // chamamos direto a tela de Vitória correspondente.
-                    let telaVitoria = 'telaParabens1';
-                    if (this.modo === 'intermediario') telaVitoria = 'telaParabens2';
-                    else if (this.modo === 'avancado') telaVitoria = 'telaParabens3';
-
-                    this.scene.start(telaVitoria);
-
-                } else {
-                    // Pontuação insuficiente
-                    this.scene.start('telaFalha', {
-                        modo: this.modo,
-                        ilha: this.ilha,
-                        pontuacao: pontuacaoFinal
-                    });
+                let sfxPermitidoFinal = this.registry.get('sfx_ligado');
+                if (sfxPermitidoFinal !== false) {
+                    this.sound.play('ilha-concluida', { volume: 0.8 });
                 }
 
-            } else {
-                // Ainda não é a última ilha, apenas volta para o mapa
-                this.scene.start(telaMapa);
+                const totalIlhasDoModo = Object.keys(perguntas[this.modo] || {}).length;
+                const chaveProgresso = 'nivelDesbloqueado_' + this.modo;
+                const numeroIlhaAtual = parseInt(this.ilha.replace('ilha', ''));
+                const nivelMaximoAlcancado = this.registry.get(chaveProgresso) || 0;
+
+                // Atualiza o progresso específico deste modo somente se avançou além do máximo anterior
+                if (numeroIlhaAtual > nivelMaximoAlcancado) {
+                    this.registry.set(chaveProgresso, numeroIlhaAtual);
+                    localStorage.setItem(chaveProgresso, String(numeroIlhaAtual));
+                }
+
+                // Determina o mapa de trilha correto para retornar após concluir a ilha
+                let telaMapa = 'telaTrilha'; // padrão: iniciante
+                if (this.modo === 'intermediario') telaMapa = 'telaTrilhaIntermediaria';
+                else if (this.modo === 'avancado') telaMapa = 'telaTrilhaAvancada';
+
+                const pontuacaoFinal = this.registry.get('pontuacao') || 0;
+
+                // PONTUACAO_MINIMA é a constante global definida em configPhaser.js
+                // que define o limiar acumulado necessário para concluir cada trilha
+                const pontuacaoMinima = PONTUACAO_MINIMA[this.modo];
+
+                if (numeroIlhaAtual >= totalIlhasDoModo) {
+                    // Chegou na última ilha da trilha: verifica se atingiu a pontuação mínima
+                    if (pontuacaoFinal >= pontuacaoMinima) {
+                        // Pontuação suficiente: exibe a tela de parabéns correspondente ao modo
+                        let telaVitoria = 'telaParabens1';
+                        if (this.modo === 'intermediario') telaVitoria = 'telaParabens2';
+                        else if (this.modo === 'avancado') telaVitoria = 'telaParabens3';
+
+                        this.scene.start(telaVitoria);
+                    } else {
+                        // Pontuação insuficiente: redireciona para a tela de falha com os dados da sessão
+                        this.scene.start('telaFalha', {
+                            modo: this.modo,
+                            ilha: this.ilha,
+                            pontuacao: pontuacaoFinal
+                        });
+                    }
+                } else {
+                    // Ainda há ilhas restantes na trilha: volta para o mapa sem verificar mínimo
+                    this.scene.start(telaMapa);
+                }
             }
-        }})}
+        });
+    }
 
     // Exibe o feedback negativo e mantém o jogador na mesma pergunta para tentar novamente
     respostaErrada(botaoAlternativaImage) {
-        
 
         let permissaoSom = this.registry.get('sfx_ligado');
         if (permissaoSom !== false) {
@@ -545,7 +533,7 @@ class CenaPergunta extends Phaser.Scene {
         // Efeito de tremida na câmera para reforçar o feedback visual de erro
         this.cameras.main.shake(200, 0.01);
 
-        // Rola a câmera para baixo para revelar o pop-up de erro
+        // Rola a câmera para baixo para revelar o pop-up de erro abaixo da área visível
         this.tweens.add({
             targets: this.cameras.main,
             scrollY: 120,
@@ -591,7 +579,7 @@ class CenaPergunta extends Phaser.Scene {
             txtFeedbackErro.destroy();
             btnOkErro.destroy();
             bloqueador.destroy();
-            // Cancelar todos os tweens ativos na câmera antes de redefinir scrollY
+            // Cancela tweens ativos na câmera antes de redefinir scrollY para evitar conflito
             this.tweens.killTweensOf(this.cameras.main);
             this.cameras.main.scrollY = 0;
         });
