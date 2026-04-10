@@ -37,6 +37,8 @@ window.onload = function () {
         game.scene.add('telaParabens2', TelaParabens2);
         game.scene.add('telaTrilhaIntermediaria', TelaTrilhaIntermediaria);
         game.scene.add('telaTrilhaAvancada', TelaTrilhaAvancada);
+        game.scene.add('telaParabens3', TelaParabens3);
+        game.scene.add('telaFalha', TelaFalha);
 
         // NOVAS CENAS: Fluxo final Mastercard Surpreenda
         game.scene.add('telaSurpreendaPresente', TelaSurpreendaPresente); // Caixa presente + info Surpreenda

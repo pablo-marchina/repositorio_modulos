@@ -12,7 +12,7 @@
 - <a href="https://www.linkedin.com/in/lucas-daddazio/">Lucas D'Addazio</a>
 - <a href="https://www.linkedin.com/in/pablo-marchina/">Pablo Marchina</a> 
 - <a href="https://www.linkedin.com/in/enzo-c-a221b23b3/">Enzo Faria</a> 
-- <a href="https://www.linkedin.com/in/victorbarq/">Rafael Botelho</a>
+- <a href="https://www.linkedin.com/in/rafael-ângelo-7092b93aa/">Rafael Botelho</a>
 - <a href="https://www.linkedin.com/in/pietra-feitoza/">Pietra Feitoza</a> 
 - <a href="https://www.linkedin.com/in/raissaguimaraes/">Raissa Guimaraes</a>
 
@@ -32,7 +32,6 @@
 
 &emsp;[7. Referências](#c7)
 
-&emsp;[Anexos](#c8)
 <br>
 
 # <a name="c1"></a>1. Introdução
@@ -66,6 +65,7 @@
 &emsp;	Em 2025, o valor da marca da Mastercard ultrapassou $22.495 bilhões segundo a Brand Finance (Janeiro, 2026). Esse tipo de reconhecimento é construído por décadas, portanto em um mercado já consolidado com gigantes como o Mastercard, Visa e Elo, novos entrantes se tornam menos prováveis de suceder. 
 
 
+
 &emsp;**Análise da Ameaça de Produtos ou Serviços Substitutos: Moderada a Alta**
 
 &emsp;	A ameaça de substitutos é moderada a alta, impulsionada principalmente pela evolução tecnológica no setor financeiro. Sistemas de pagamentos instantâneos (RTP), como o Pix no Brasil e o UPI na Índia, permitem transferências diretas e, muitas vezes, com custo reduzido, contornando completamente as redes tradicionais de cartões. 
@@ -75,11 +75,13 @@
 &emsp;	Embora esses substitutos ampliem a concorrência e pressionem o volume transacionado em cartões, a Mastercard e outras bandeiras ainda mantêm forte relevância devido à sua ampla aceitação global, segurança e padronização mundial. 
 
 
+
 &emsp;**Análise do Poder de Barganha dos Fornecedores: Baixo**
 
 &emsp;	O poder de barganha dos fornecedores é relativamente baixo. A Mastercard possui diversas parcerias com fintechs de tecnologia, serviços de processamento de dados, cibersegurança e infraestrutura digital. Portanto, por ser uma corporação global de grande porte, possui ampla capacidade de negociação e pode diversificar seus parceiros estratégicos. 
 
 &emsp;	Além disso, como disse o líder de RH global da Mastercard Michael Fraccaro em entrevista com VOCÊ S/A em 2025: “Hoje, 60% dos nossos projetos são realizados internamente”, reduzindo a dependência de terceiros. Pelo setor de pagamentos estar fortemente ligado ao conhecimento tecnológico e sistemas digitais, a possibilidade de múltiplos fornecedores qualificados e desenvolvimento interno é ampliada, diminuindo o poder individual de cada um.
+
 
 
 &emsp;**Análise do Poder de Barganha dos Clientes: Moderado**
@@ -93,6 +95,7 @@
 &emsp;	Ademais, observa-se o fortalecimento do poder de barganha dos comerciantes. As taxas pagas às redes de pagamento atingiram aproximadamente US$187,2 bilhões no último ano (Statista, Dezembro 2025), configurando-se como o segundo maior custo operacional do varejo. Considerando que as taxas de intercâmbio normalmente variam entre 2% e 3% do valor da transação (Banco Central do Brasil, Janeiro 2026), mesmo reduções aparentemente pequenas produzem impactos financeiros relevantes quando aplicadas a grandes volumes de vendas.
 
 &emsp;	A substituição completa da bandeira para os clientes da Mastercard implicaria elevados custos operacionais, riscos tecnológicos e possíveis perdas de aceitação no mercado global. Dessa forma, embora o poder de barganha dos clientes esteja em ascensão, ele permanece moderado, dada a escala e a relevância estratégica da rede Mastercard.
+
 
 
 &emsp;**Análise da Rivalidade entre os Concorrentes Existentes: Alta**
@@ -116,6 +119,7 @@
 &emsp;**Matriz SWOT**
 &emsp;	A análise a seguir detalha o posicionamento estratégico da Mastercard no desenvolvimento do projeto Masterclass, avaliando as forças e fraquezas inerentes à organização, bem como as oportunidades e ameaças que permeiam o dinâmico mercado de meios de pagamento e educação financeira em 2026.
 
+
 &emsp;**Forças (Strengths)**
 
 - Marca Global com Credibilidade Consolidada: A Mastercard detém um reconhecimento internacional inigualável, consolidando-se como uma das maiores bandeiras de cartões do mundo. No Brasil, sua dominância é expressiva, controlando aproximadamente 60% do mercado. Avaliada em $22,495 bilhões pela Brand Finance (2025), a marca carrega décadas de construção de confiança e segurança, ativos que serão transferidos diretamente para o aplicativo Masterclass, reduzindo a barreira de entrada e aumentando a confiança do usuário no conteúdo educativo oferecido.
@@ -125,6 +129,7 @@
 - Coerência Visual e Identidade Institucional: Amparada por estudos de branding de instituições como a Harvard Business Review, a Mastercard utiliza a consistência visual como ferramenta de retenção. A padronização da identidade visual no aplicativo Masterclass não apenas reforça o reconhecimento da marca, mas também valida o jogo como uma extensão oficial do ecossistema de pagamentos, elevando a percepção de valor e seriedade do projeto.
 
 - Expertise Tecnológica e Infraestrutura de Dados: A capacidade técnica da companhia permite uma integração profunda entre a mecânica do jogo e a realidade financeira. A infraestrutura da Mastercard viabiliza simulações complexas e realistas — como pedidos de empréstimos, cálculos de faturas e antecipação de parcelas — utilizando as mesmas lógicas transacionais que o usuário encontrará no mercado real, criando um ambiente de aprendizado técnico de alta fidelidade.
+
 
 &emsp;**Oportunidades (Opportunities)**
 
@@ -138,6 +143,7 @@
 
 - Aumento da Inserção Produtiva da Juventude: A queda na proporção da geração “nem-nem” (19,7% em 2025) indica que mais jovens estão ingressando no mercado de trabalho e no sistema educacional. Esse contingente representa uma nova base de consumidores que necessita urgentemente de ferramentas para gerir seus primeiros salários e linhas de crédito.
 
+
 &emsp;**Fraquezas (Weaknesses)**
 
 - Dependência Estrutural do Modelo B2B: Devido à sua natureza de bandeira e não de banco emissor, a Mastercard possui autonomia limitada para oferecer recompensas financeiras diretas (como cashbacks ou isenções) sem a adesão e aprovação contratual das instituições parceiras, o que pode engessar a agilidade estratégica de certas campanhas de incentivo dentro do jogo.
@@ -147,6 +153,7 @@
 - Desafios de Integração com Sistemas Legados de Fidelidade: A complexidade técnica necessária para associar o progresso in-game a sistemas globais consolidados, como o Mastercard Surpreenda, pode representar um gargalo operacional, limitando a oferta de recompensas tangíveis imediatas nas fases iniciais do projeto.
 
 - Alta Dependência da Percepção de Valor da Bandeira: Como o aplicativo é posicionado como um produto oficial, qualquer flutuação na reputação corporativa da Mastercard ou mudanças drásticas na regulação do setor de cartões impactam diretamente a credibilidade e a viabilidade do Masterclass como ferramenta educativa imparcial.
+
 
 &emsp;**Ameaças (Threats)**
 
@@ -158,15 +165,18 @@
 
 - Barreira de Engajamento Cognitivo e Competição por Atenção: O Masterclass exige do jogador esforço mental para resolver dilemas financeiros reais. No mercado de apps, ele compete diretamente por atenção com jogos puramente casuais (hiper-casuais) e redes sociais, o que exige um balanceamento de gamificação extremamente refinado para evitar o abandono por fadiga cognitiva.
 
+
 ### 1.1.3. Missão / Visão / Valores
 
 &emsp;**Missão:** 
 
 &emsp;	Democratizar o acesso à educação financeira por meio de uma plataforma gamificada que ensina, na prática, como usar cartões de crédito, débito e pré-pago e constrói costumes financeiros sustentáveis.
 
+
 &emsp;**Visão:** 
 
 &emsp;	Consolidar-se como referência nacional em educação financeira gamificada, ampliando o acesso ao conhecimento prático e reduzindo o déficit de alfabetização financeira no Brasil.
+
 
 &emsp;**Valores:**
  
@@ -181,6 +191,7 @@
 - Conhecimento Aplicado e Relevante: Focamos em competências que impactam o dia a dia do usuário  do uso do crédito rotativo à gestão de faturas garantindo que cada sessão de jogo resulte em uma decisão financeira mais inteligente fora dele.
 
 - Gamificação Ética e Consciente: O ensino acessível não busca o vício no jogo, mas o engajamento no aprendizado. Utilizamos mecânicas de recompensa para celebrar o progresso intelectual e a saúde financeira, nunca o consumo impulsivo.
+
 
 ### 1.1.4. Proposta de Valor
 
@@ -206,6 +217,7 @@
 
 &emsp;	Ganhos (Gains): Os ganhos representam os resultados que o usuário espera alcançar, alinhados à estratégia de inclusão financeira da Mastercard. O principal ganho é a autonomia financeira, permitindo usar o crédito como instrumento de planejamento, tendo a Mastercard como parceira (Lusardi & Mitchell, 2014). O cliente também espera a recuperação e manutenção do seu score de crédito para viabilizar financiamentos futuros (SERASA, 2026; BACEN, 2026). Através das mecânicas de gamificação, espera-se uma alta retenção de conceitos financeiros, com um aumento de até 93% no tempo de atenção (Market.us, 2026). Por fim, busca-se a consolidação de hábitos financeiros preventivos, como o controle de gastos e a poupança, reduzindo as chances de inadimplência (IBGE, 2024; Lusardi & Mitchell, 2014).
 
+
 &emsp;**B. Mapa de Valor — A Solução Masterclass**
 
 &emsp;	A solução utiliza a infraestrutura mobile como principal canal, validada pelo fato de que o smartphone é o meio de acesso à internet para 93% dos brasileiros (CETIC.br, 2026). A plataforma foca em educação ativa através da gamificação, respondendo à preferência de 74% do público por aprendizados interativos em vez de métodos expositivos tradicionais (PGB, 2026).
@@ -215,6 +227,7 @@
 &emsp;	Aliviadores de Dores (Pain Relievers): Os aliviadores atuam diretamente nas dores do cliente. O Ambiente Safe-to-Fail permite que o usuário tome decisões financeiras erradas no jogo sem comprometer seu CPF real, eliminando a ansiedade do endividamento (Lusardi & Mitchell, 2014). O NPC Wink fornece feedback contextualizado em linguagem simples, traduzindo termos complexos e combatendo o analfabetismo estrutural (ANBIMA, 2023; BACEN, 2026). O Simulador de Escalada de Dívidas mostra de forma matemática como juros compostos e parcelamentos sucessivos afetam pequenas dívidas, utilizando situações práticas de consumo cotidiano e taxas reais de 2026 (BACEN, 2026; SERASA, 2026). Dessa forma, dores específicas como a dificuldade de prever o impacto do parcelamento deixam de ser abstratas e passam a ser experimentadas de forma visual e imediata pelo usuário. Além disso, a microaprendizagem gamificada em sessões curtas estilo 'Candy Crush' combate a rejeição aos métodos de ensino tradicionais (PGB, 2026; Market.us, 2026).
 
 &emsp;	Criadores de Ganho (Gain Creators): Os criadores de ganho geram valor mensurável e alinham o usuário ao posicionamento da Mastercard. O engajamento por relevância contextual utiliza dados reais de inadimplência de 2026 para criar cenários práticos e úteis (SERASA, 2026; CETIC.br, 2026). A progressão visual e a ativação dopaminérgica, por meio de recompensas incrementais, sustentam o engajamento de longo prazo (Market.us, 2026). O reconhecimento simbólico Mastercard associa o esforço educativo aos benefícios da bandeira, criando um vínculo positivo de identidade (Brand Finance, 2026). Esse processo resulta na formação de hábitos financeiros mensuráveis, permitindo rastrear o desenvolvimento do usuário e gerar dados para futuras personalizações (Lusardi & Mitchell, 2014; IBGE, 2024).
+
 
 &emsp;**Evidência de Pesquisa e Alinhamento Estratégico Mastercard**
 

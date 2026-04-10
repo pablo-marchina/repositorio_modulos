@@ -125,7 +125,6 @@ class TelaDificuldade extends Phaser.Scene {
                 });
                 return;
             } else {
-                // ... (seu código de balançar o cartão e tocar som de erro continua igualzinho aqui)
                 this.tweens.add({
                     targets: cartaoAvancado,
                     x: '+=10',
@@ -171,7 +170,7 @@ class TelaDificuldade extends Phaser.Scene {
                 });
                 return;
             } else {
-               // ... (seu código de balançar o cartão e tocar som de erro continua igualzinho aqui)
+        
                 this.tweens.add({
                     targets: cartaoIntermediario,
                     x: '+=10',

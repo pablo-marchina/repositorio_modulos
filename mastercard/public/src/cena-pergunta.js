@@ -22,16 +22,32 @@ class CenaPergunta extends Phaser.Scene {
         this.alternativasBloqueadas = false;
         // O timer fica salvo para ser encerrado ao trocar de pergunta, evitando que um cooldown antigo afete a próxima rodada
         this.timerBloqueioAlternativas = null;
+        
     }
 
     // Preload: carrega os fundos das perguntas e os elementos visuais da interface
     preload() {
+
+        const PONTUACAO_MINIMA = {
+            iniciante: 100,
+            intermediario: 300,
+            avancado: 500
+        };
+        
         // Lista os modos usados para montar dinamicamente as chaves das imagens
         // Carrega só as 5 imagens da ilha e modo atual, não todas as 75
         const numeroIlha = this.ilha.replace('ilha', 'i'); // converte 'ilha1' > 'i1'
 
-        for (let q = 1; q <= 5; q++) {
-            this.load.image(`${this.modo}_${numeroIlha}_q${q}`, `assets/perguntas/${this.modo}_${numeroIlha}_q${q}.jpg`);
+        for (let q = 1; q <= 4; q++) {
+            this.load.image(`iniciante_${numeroIlha}_q${q}`, `assets/perguntas/iniciante_${numeroIlha}_q${q}.jpg`);
+        }
+
+        for (let q = 1; q <= 4; q++) {
+            this.load.image(`intermediario_${numeroIlha}_q${q}`, `assets/perguntas/intermediario_${numeroIlha}_q${q}.jpg`);
+        }
+
+        for (let q = 1; q <= 4; q++) {
+            this.load.image(`dificil_${numeroIlha}_q${q}`, `assets/perguntas/dificil_${numeroIlha}_q${q}.jpg`);
         }
 
         this.load.image('lista', 'assets/icones_gerais/lista.png');
@@ -358,6 +374,7 @@ class CenaPergunta extends Phaser.Scene {
 
     // Exibe o feedback positivo, soma pontos e encaminha o fluxo para a próxima pergunta
     respostaCorreta(botaoAlternativaImage) {
+
         let permissaoSom = this.registry.get('sfx_ligado');
         if (permissaoSom !== false) {
             this.sound.play('som-correta', { volume: 0.8 });
@@ -466,41 +483,43 @@ class CenaPergunta extends Phaser.Scene {
                 localStorage.setItem(chaveProgresso, String(numeroIlhaAtual));
             }
 
+            /// ... (seu código de salvar nível máximo fica mantido aqui) ...
+
             // LÓGICA DE DIRECIONAMENTO
             let telaMapa = 'telaTrilha'; // Padrão Iniciante
-            if (this.modo === 'intermediario') {
-                telaMapa = 'telaTrilhaIntermediaria';
-            } else if (this.modo === 'avancado') {
-                telaMapa = 'telaTrilhaAvancada';
-            }
+            if (this.modo === 'intermediario') telaMapa = 'telaTrilhaIntermediaria';
+            else if (this.modo === 'avancado') telaMapa = 'telaTrilhaAvancada';
 
-            if (this.modo === 'iniciante' && numeroIlhaAtual >= totalIlhasDoModo) {
-                if (pontuacaoFinal >= 120) {
-                    this.scene.start(telaMapa);
-                    this.scene.launch('telaParabens1');
+            const pontuacaoFinal = this.registry.get('pontuacao') || 0;
+            // Se por algum motivo a constante falhar, assume 100 como segurança
+            const pontuacaoMinima = (typeof PONTUACAO_MINIMA !== 'undefined' && PONTUACAO_MINIMA[this.modo]) ? PONTUACAO_MINIMA[this.modo] : 100;
+
+            if (numeroIlhaAtual >= totalIlhasDoModo) {
+                // Chegou na última ilha!
+                if (pontuacaoFinal >= pontuacaoMinima) {
+                    
+                    // Em vez de carregar o Mapa e o Parabéns juntos e causar conflito, 
+                    // chamamos direto a tela de Vitória correspondente.
+                    let telaVitoria = 'telaParabens1';
+                    if (this.modo === 'intermediario') telaVitoria = 'telaParabens2';
+                    else if (this.modo === 'avancado') telaVitoria = 'telaParabens3';
+
+                    this.scene.start(telaVitoria);
+
                 } else {
-                // Pontuação insuficiente: retorna ao mapa sem desbloquear
-                    this.scene.start(telaMapa);
+                    // Pontuação insuficiente
+                    this.scene.start('telaFalha', {
+                        modo: this.modo,
+                        ilha: this.ilha,
+                        pontuacao: pontuacaoFinal
+                    });
                 }
-                } else if (this.modo === 'intermediario' && numeroIlhaAtual >= totalIlhasDoModo) {
-                    if (pontuacaoFinal >= 300) {
-                        this.scene.start(telaMapa);
-                        this.scene.launch('telaParabens2');
-                    } else {
-                        this.scene.start(telaMapa);
-                    }
-                } else if (this.modo === 'avancado' && numeroIlhaAtual >= totalIlhasDoModo) {
-                    if (pontuacaoFinal >= 500) {
-                        this.scene.start(telaMapa);
-                        this.scene.launch('telaParabensFinal');
-                    } else {
-                    this.scene.start(telaMapa);
-                    }
-                } else {
-                    this.scene.start(telaMapa);
-                }
-            }});
-    }
+
+            } else {
+                // Ainda não é a última ilha, apenas volta para o mapa
+                this.scene.start(telaMapa);
+            }
+        }})}
 
     // Exibe o feedback negativo e mantém o jogador na mesma pergunta para tentar novamente
     respostaErrada(botaoAlternativaImage) {
